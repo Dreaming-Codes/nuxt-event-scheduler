@@ -3,6 +3,8 @@ import anime from "animejs";
 
 const config = useAppConfig()
 
+const themeColor = "#0F172A";
+
 useHead({
   title: config.TITLE,
   meta: [
@@ -13,6 +15,18 @@ useHead({
     {
       name: "google-site-verification",
       content: "Noj9u0V2hrMOox_Ft5pMKfOK51vlpCab714vr_xic-Q"
+    },
+    {
+      name: "theme-color",
+      content: themeColor
+    },
+    {
+      name: "msapplication-navbutton-color",
+      content: themeColor
+    },
+    {
+      name: "apple-mobile-web-app-status-bar-style",
+      content: themeColor
     }
   ],
   htmlAttrs: {
