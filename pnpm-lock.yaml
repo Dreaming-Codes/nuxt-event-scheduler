@@ -11,7 +11,7 @@ specifiers:
   '@types/animejs': ^3.1.6
   animejs: ^3.2.1
   nuxt: 3.0.0
-  nuxt-headlessui: ^1.1.0
+  nuxt-headlessui: 1.0.4
   prisma: ^4.8.1
   sass: ^1.57.1
 
@@ -26,7 +26,7 @@ devDependencies:
   '@types/animejs': 3.1.6
   animejs: 3.2.1
   nuxt: 3.0.0_sass@1.57.1
-  nuxt-headlessui: 1.1.0
+  nuxt-headlessui: 1.0.4
   prisma: 4.8.1
   sass: 1.57.1
 
@@ -3874,8 +3874,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /nuxt-headlessui/1.1.0:
-    resolution: {integrity: sha512-uA3iBksCMl56xz3Iq9AcTKe5cmgOuGrRuZnXxBfXlnbyYnDGhC3J6LbU/J+58dre6M5gGB+3SxgflPITNxpkiw==}
+  /nuxt-headlessui/1.0.4:
+    resolution: {integrity: sha512-DvmfZqDInDyvBnldf54XIShZVOmKA7SFtIxWQNOORwghDijQxqxkDLw+2BCw/otXf/xE815/7su895edeVsSeA==}
     dependencies:
       '@headlessui/vue': 1.7.7
       '@nuxt/kit': 3.0.0
@@ -5577,7 +5577,7 @@ packages:
       mri: 1.2.0
       ofetch: 1.0.0
       ufo: 1.0.1
-      ws: 8.11.0
+      ws: 8.12.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -5863,12 +5863,12 @@ packages:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
 
-  /ws/8.11.0:
-    resolution: {integrity: sha512-HPG3wQd9sNQoT9xHyNCXoDUa+Xw/VevmY9FoHyQ+g+rrMn4j6FB4np7Z0OhdTgjx6MgQLK7jwSy1YecU1+4Asg==}
+  /ws/8.12.0:
+    resolution: {integrity: sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
-      utf-8-validate: ^5.0.2
+      utf-8-validate: '>=5.0.2'
     peerDependenciesMeta:
       bufferutil:
         optional: true

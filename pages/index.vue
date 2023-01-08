@@ -3,7 +3,7 @@ const categories = ref({
   LUNEDÌ: [
     {
       id: 1,
-      title:'Lorem ipsum dolor sit amet',
+      title: 'Lorem ipsum dolor sit amet',
       date: '08:00',
       subs: 23,
     },
@@ -17,7 +17,7 @@ const categories = ref({
   MARTEDÌ: [
     {
       id: 1,
-      title:'Lorem ipsum dolor sit amet',
+      title: 'Lorem ipsum dolor sit amet',
       date: '08:00',
       subs: 23,
     }
@@ -25,7 +25,7 @@ const categories = ref({
   MERCOLEDÌ: [
     {
       id: 1,
-      title:'Lorem ipsum dolor sit amet',
+      title: 'Lorem ipsum dolor sit amet',
       date: '08:00',
       subs: 23,
     },
@@ -43,6 +43,7 @@ const isOpen = ref(false)
 function closeModal() {
   isOpen.value = false
 }
+
 function openModal() {
   isOpen.value = true
 }
@@ -74,7 +75,7 @@ function openModal() {
         </HeadlessTabList>
 
         <HeadlessTabPanels class="mt-2">
-          <TransitionScale group :duration="500">
+          <TransitionScale :duration="500" group>
             <HeadlessTabPanel
                 v-for="(posts, idx) in Object.values(categories)"
                 :key="idx"
@@ -116,62 +117,64 @@ function openModal() {
           </TransitionScale>
         </HeadlessTabPanels>
       </HeadlessTabGroup>
-      <HeadlessTransitionRoot appear :show="isOpen">
-        <HeadlessDialog @close="closeModal" class="relative z-10">
-          <HeadlessTransitionChild
-              as="template"
-              enter="duration-300 ease-out"
-              enter-from="opacity-0"
-              enter-to="opacity-100"
-              leave="duration-200 ease-in"
-              leave-from="opacity-100"
-              leave-to="opacity-0"
-          >
-            <div class="fixed inset-0 bg-black bg-opacity-25" />
-          </HeadlessTransitionChild>
-
-          <div class="fixed inset-0 overflow-y-auto">
-            <div
-                class="flex min-h-full items-center justify-center p-4 text-center"
+      <ClientOnly>
+        <HeadlessTransitionRoot :show="isOpen" appear>
+          <HeadlessDialog class="relative z-10" @close="closeModal">
+            <HeadlessTransitionChild
+                as="template"
+                enter="duration-300 ease-out"
+                enter-from="opacity-0"
+                enter-to="opacity-100"
+                leave="duration-200 ease-in"
+                leave-from="opacity-100"
+                leave-to="opacity-0"
             >
-              <HeadlessTransitionChild
-                  enter="duration-300 ease-out"
-                  enter-from="scale-[20%]"
-                  enter-to="scale-100"
-                  leave="duration-200 ease-in"
-                  leave-from="scale-50"
-                  leave-to="scale-[20%]"
-              >
-                <HeadlessDialogPanel
-                    class="w-full max-w-md transform overflow-hidden rounded-2xl bg-blue-900/[0.3] backdrop-blur p-6 text-left align-middle shadow-xl transition-all"
-                >
-                  <HeadlessDialogTitle
-                      as="h3"
-                      class="text-lg font-medium leading-6 text-white text-center"
-                  >
-                    LOGIN NECESSARIO
-                  </HeadlessDialogTitle>
-                  <div class="mt-2">
-                    <p class="text-sm text-gray-400">
-                      Prima di potersi inscrivere a delle attività è necessario effettuare il login.
-                    </p>
-                  </div>
+              <div class="fixed inset-0 bg-black bg-opacity-25"/>
+            </HeadlessTransitionChild>
 
-                  <div class="mt-4 flex place-content-center">
-                    <button
-                        type="button"
-                        class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        @click="closeModal"
+            <div class="fixed inset-0 overflow-y-auto">
+              <div
+                  class="flex min-h-full items-center justify-center p-4 text-center"
+              >
+                <HeadlessTransitionChild
+                    enter="duration-300 ease-out"
+                    enter-from="scale-[20%]"
+                    enter-to="scale-100"
+                    leave="duration-200 ease-in"
+                    leave-from="scale-50"
+                    leave-to="scale-[20%]"
+                >
+                  <HeadlessDialogPanel
+                      class="w-full max-w-md transform overflow-hidden rounded-2xl bg-blue-900/[0.3] backdrop-blur p-6 text-left align-middle shadow-xl transition-all"
+                  >
+                    <HeadlessDialogTitle
+                        as="h3"
+                        class="text-lg font-medium leading-6 text-white text-center"
                     >
-                      LOGIN
-                    </button>
-                  </div>
-                </HeadlessDialogPanel>
-              </HeadlessTransitionChild>
+                      LOGIN NECESSARIO
+                    </HeadlessDialogTitle>
+                    <div class="mt-2">
+                      <p class="text-sm text-gray-400">
+                        Prima di potersi inscrivere a delle attività è necessario effettuare il login.
+                      </p>
+                    </div>
+
+                    <div class="mt-4 flex place-content-center">
+                      <button
+                          class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                          type="button"
+                          @click="closeModal"
+                      >
+                        LOGIN
+                      </button>
+                    </div>
+                  </HeadlessDialogPanel>
+                </HeadlessTransitionChild>
+              </div>
             </div>
-          </div>
-        </HeadlessDialog>
-      </HeadlessTransitionRoot>
+          </HeadlessDialog>
+        </HeadlessTransitionRoot>
+      </ClientOnly>
     </div>
   </div>
 </template>
