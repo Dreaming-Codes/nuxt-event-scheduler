@@ -50,12 +50,12 @@ onMounted(() => {
     <h1 id="title"
         class="glow-strong text-transparent top-[50%] mx-auto text-[20vmin] md:text-9xl relative top-50 translate-y-[-50%]">
       {{ config.TITLE }}</h1>
-    <a target="_blank" class="absolute bottom-0 right-0 mb-1 mr-2 hover:underline text-white/[0.3] hover:text-white transition-colors" href="https://dreaming.codes">Website by Lorenzo Rizzotti</a>
     <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)">
       <div v-if="animationFinished">
         <NuxtPage/>
       </div>
     </TransitionScale>
+    <a target="_blank" class="fixed bottom-0 right-0 mb-1 mr-2 hover:underline text-white/[0.3] hover:text-white transition-colors" href="https://dreaming.codes">Website by Lorenzo Rizzotti</a>
   </div>
 </template>
 
