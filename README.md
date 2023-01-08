@@ -17,6 +17,8 @@ GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 BASE_URL=http://localhost:3000
 EMAIL_DOMAIN=@itismeucci.com
+DATABASE_URL=postgress_url
+SHADOW_DATABASE_URL=postgress_url/postgres_shadow
 ```
 
 ## Development Server
