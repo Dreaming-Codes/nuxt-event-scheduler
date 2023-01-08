@@ -15,6 +15,7 @@ DATABASE_URL="file:./dev.db"
 AUTH_SECRET=secret
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
+BASE_URL=http://localhost:3000
 ```
 
 ## Development Server

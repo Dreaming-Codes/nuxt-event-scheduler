@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     ],
     auth: {
         isEnabled: true,
+        origin: process.env.VERCEL_URL || process.env.BASE_URL,
         basePath: '/api/auth',
     },
     appConfig: {
