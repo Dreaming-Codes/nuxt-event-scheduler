@@ -40,7 +40,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="absolute -z-50 top-0 index-x-0 flex justify-center overflow-hidden pointer-events-none w-full h-full bg-slate-900">
+  <div class="fixed -z-50 top-0 index-x-0 flex justify-center overflow-hidden pointer-events-none w-screen h-screen bg-slate-900">
     <div class="w-[108rem] flex-none flex justify-end">
       <nuxt-img alt="bg-effect" format="webp" class="w-[90rem] flex-none max-w-none" decoding="async" src="/bgdecdark.png"/>
     </div>
