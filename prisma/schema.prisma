@@ -23,6 +23,8 @@ model User {
   name      String
   email     String      @unique
   EventUser EventUser[]
+
+  @@index([email])
 }
 
 model EventUser {
