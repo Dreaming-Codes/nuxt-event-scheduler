@@ -62,7 +62,7 @@ function openModal() {
           >
             <button
                 :class="[
-              'w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100 blur',
+              'w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100',
               'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none',
               selected
                 ? 'bg-white/[0.16] shadow'
