@@ -21,7 +21,6 @@ DATABASE_URL=postgress_url
 SHADOW_DATABASE_URL=postgress_url/postgres_shadow
 ```
 
-
 ## Development Server
 
 Start the development server on http://localhost:3000
