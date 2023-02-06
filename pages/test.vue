@@ -33,14 +33,42 @@ function openModal() {
 </script>
 
 <template>
-  <div class="main-transparency absolute translate-x-1/2 w-[70%] right-1/2">
-    Ciao
-  <div class="mt-10 h-[70vh]">
-    <div class="max-h-[100%] overflow-auto">
-      <Event v-for="_ in 20" name="name" description="description" :availableSlots="3" class="my-4"/>
+  <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
+    Attività {{selectedDay }}
+
+    <div class="mt-10 h-[70vh]">
+      <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto ">
+        <Event v-for="event in events[selectedDay]" :availableSlots="event.availableSlots" class="my-4" :description="event.description" :name="event.name"/>
+      </div>
+      <div class="mt-4 flex flex-row place-content-between">
+        <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>
+        <div class="mr-4">
+          <button class="white-transparent-component back-button transition-colors" @click="selectedDay--" :disabled="selectedDay <= 0">Indietro</button>
+          <button class="white-transparent-component next-button transition-colors ml-2" @click="selectedDay++" :disabled="selectedDay >= events.length - 1">Avanti</button>
+        </div>
+
+      </div>
+
     </div>
   </div>
-  </div>
+  <Dialog :isOpen="isOpen" title="SICURO DI VOLER MANCARE?" description="Se manchi, ti verrà applicata un'assenza sul registro" @close="isOpen = false">
+    <div class="mt-4 flex place-content-between">
+      <button
+          class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 absent-button"
+          type="button"
+          @click="isOpen = false"
+      >
+        Si, mi assenterò
+      </button>
+      <button
+          class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 next-button"
+          type="button"
+          @click="isOpen = false"
+      >
+        No, ci sarò
+      </button>
+    </div>
+  </Dialog>
 </template>
 
 <style lang="scss" scoped>

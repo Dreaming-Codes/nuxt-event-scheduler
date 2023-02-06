@@ -12,7 +12,7 @@ const isOpen = ref(false);
   <div>
     <div class="white-transparent-component hover:bg-white/[0.2] transition-colors">
       <div class="flex place-content-between ">
-        <p>{{ name.length > 30 ? name.slice(0, 29) + "…" : name }}</p>
+        <p class="text-white">{{ name.length > 30 ? name.slice(0, 29) + "…" : name }}</p>
         <button @click="isOpen = true">
           <Icon class="mb-1" name="mdi:information-outline"/>
         </button>

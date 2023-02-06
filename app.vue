@@ -71,7 +71,7 @@ onMounted(() => {
     <p class="fixed bottom-0 right-0 mb-1 mr-2 text-white/[0.3] transition-colors hidden min-[360px]:block">
       Website by
       <a class="hover:text-white hover:underline" target="_blank" href="https://dreaming.codes">Lorenzo Rizzotti</a>
-      & <a class="hover:text-white hover:underline" target="_blank" href="https://theannoyingsite.com/">Vincenzo Langone</a>
+      & <a class="hover:text-white hover:underline" target="_blank" href="https://www.youtube.com/watch?v=uHgt8giw1LY">Vincenzo Langone</a>
     </p>
   </div>
 </template>
