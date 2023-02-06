@@ -61,13 +61,8 @@ function openModal() {
               as="template"
           >
             <button
-                :class="[
-              'w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100',
-              'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none',
-              selected
-                ? 'bg-white/[0.16] shadow'
-                : 'hover:bg-white/[0.07] hover:text-white',
-            ]"
+                class="tabButton"
+                :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07] hover:text-white'"
             >
               {{ category }}
             </button>
@@ -79,10 +74,7 @@ function openModal() {
             <HeadlessTabPanel
                 v-for="(posts, idx) in Object.values(categories)"
                 :key="idx"
-                :class="[
-            'rounded-xl bg-white/[0.07] p-3',
-            'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur focus:outline-none focus:ring-2',
-          ]"
+                class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur focus:outline-none focus:ring-2"
             >
               <ul>
                 <li
@@ -102,14 +94,6 @@ function openModal() {
                     <li>&middot;</li>
                     <li>{{ post.subs }} iscritti</li>
                   </ul>
-
-                  <a
-                      :class="[
-                  'absolute inset-0 rounded-md',
-                  'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2',
-                ]"
-                      href="#"
-                  />
                 </li>
               </ul>
             </HeadlessTabPanel>
@@ -117,62 +101,23 @@ function openModal() {
           </TransitionScale>
         </HeadlessTabPanels>
       </HeadlessTabGroup>
-      <HeadlessTransitionRoot :show="isOpen" appear>
-        <HeadlessDialog class="relative z-10" @close="closeModal">
-          <HeadlessTransitionChild
-              as="template"
-              enter="duration-300 ease-out"
-              enter-from="opacity-0"
-              enter-to="opacity-100"
-              leave="duration-200 ease-in"
-              leave-from="opacity-100"
-              leave-to="opacity-0"
+      <Dialog :isOpen="isOpen" title="LOGIN NECESSARIO" description="Per fare questa azione è necessario il login" @close="isOpen = false">
+        <div class="mt-4 flex place-content-center">
+          <button
+              class="main-transparency focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              type="button"
+              @click="isOpen = false"
           >
-            <div class="fixed inset-0 bg-black bg-opacity-25"/>
-          </HeadlessTransitionChild>
-
-          <div class="fixed inset-0 overflow-y-auto">
-            <div
-                class="flex min-h-full items-center justify-center p-4 text-center"
-            >
-              <HeadlessTransitionChild
-                  enter="duration-300 ease-out"
-                  enter-from="scale-[20%]"
-                  enter-to="scale-100"
-                  leave="duration-200 ease-in"
-                  leave-from="scale-50"
-                  leave-to="scale-[20%]"
-              >
-                <HeadlessDialogPanel
-                    class="w-full max-w-md transform overflow-hidden rounded-2xl bg-blue-900/[0.3] backdrop-blur p-6 text-left align-middle shadow-xl transition-all"
-                >
-                  <HeadlessDialogTitle
-                      as="h3"
-                      class="text-lg font-medium leading-6 text-white text-center"
-                  >
-                    LOGIN NECESSARIO
-                  </HeadlessDialogTitle>
-                  <div class="mt-2">
-                    <p class="text-sm text-gray-400">
-                      Prima di potersi inscrivere a delle attività è necessario effettuare il login.
-                    </p>
-                  </div>
-
-                  <div class="mt-4 flex place-content-center">
-                    <button
-                        class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                        type="button"
-                        @click="closeModal"
-                    >
-                      LOGIN
-                    </button>
-                  </div>
-                </HeadlessDialogPanel>
-              </HeadlessTransitionChild>
-            </div>
-          </div>
-        </HeadlessDialog>
-      </HeadlessTransitionRoot>
+            LOGIN
+          </button>
+        </div>
+      </Dialog>
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.tabButton {
+  @apply w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none;
+}
+</style>

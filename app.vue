@@ -42,11 +42,11 @@ onMounted(() => {
     top: 10,
     translateY: ["-50%", 0],
     easing: 'cubicBezier(0.3, 0.001, 0.2, 1)',
-    duration: 2000,
+    duration: 0,
     loop: false,
     autoplay: true,
-    delay: 2000,
-    complete: () => {
+    delay: 0,
+    complete() {
       animationFinished.value = true;
     }
   })
@@ -54,24 +54,34 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="fixed -z-50 top-0 index-x-0 flex justify-center overflow-hidden pointer-events-none w-screen h-screen bg-slate-900">
+  <div id="background">
     <div class="w-[108rem] flex-none flex justify-end">
       <nuxt-img alt="bg-effect" format="webp" class="w-[90rem] flex-none max-w-none" decoding="async" src="/bgdecdark.png"/>
     </div>
   </div>
-  <div
-      class="absolute w-screen h-screen text-slate-400 antialiased text-center">
+  <div id="pageContent">
     <h1 id="title"
-        class="glow-strong text-transparent top-[50%] mx-auto text-[20vmin] md:text-9xl relative top-50 translate-y-[-50%]">
+        class="glow-strong text-transparent top-[50%] mx-auto text-[10vmin] md:text-8xl relative top-50 translate-y-[-50%] mb-6">
       {{ config.TITLE }}</h1>
     <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)">
       <div v-if="animationFinished">
         <NuxtPage/>
       </div>
     </TransitionScale>
-    <a target="_blank" class="fixed bottom-0 right-0 mb-1 mr-2 hover:underline text-white/[0.3] hover:text-white transition-colors" href="https://dreaming.codes">Website by Lorenzo Rizzotti</a>
+    <p class="fixed bottom-0 right-0 mb-1 mr-2 text-white/[0.3] transition-colors hidden min-[360px]:block">
+      Website by
+      <a class="hover:text-white hover:underline" target="_blank" href="https://dreaming.codes">Lorenzo Rizzotti</a>
+      & <a class="hover:text-white hover:underline" target="_blank" href="https://theannoyingsite.com/">Vincenzo Langone</a>
+    </p>
   </div>
 </template>
 
 <style lang="scss">
+#background {
+  @apply fixed -z-50 top-0 flex justify-center overflow-hidden pointer-events-none w-screen h-screen bg-slate-900;
+}
+
+#pageContent {
+  @apply absolute w-screen h-screen text-slate-400 antialiased text-center overflow-x-hidden;
+}
 </style>

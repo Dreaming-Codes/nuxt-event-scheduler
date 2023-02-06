@@ -8,6 +8,7 @@ export default defineNuxtConfig({
         '@morev/vue-transitions/nuxt',
         '@sidebase/nuxt-auth',
         '@nuxtjs/robots',
+        'nuxt-icon'
     ],
     auth: {
         isEnabled: true,
@@ -17,7 +18,7 @@ export default defineNuxtConfig({
     appConfig: {
         "TITLE": "FORUM MEUCCI",
         "LANG": "it",
-        "DESCRIPTION": "Pagina di registrazione per il forum dell'ITIS Meucci",
+        "DESCRIPTION": "Pagina di registrazione per il forum dell'ITIS Meucci 2023",
     },
     nitro: {
       compressPublicAssets: true,
