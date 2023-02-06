@@ -42,10 +42,10 @@ onMounted(() => {
     top: 10,
     translateY: ["-50%", 0],
     easing: 'cubicBezier(0.3, 0.001, 0.2, 1)',
-    duration: 0,
+    duration: 2000,
     loop: false,
     autoplay: true,
-    delay: 0,
+    delay: 500,
     complete() {
       animationFinished.value = true;
     }
