@@ -1,0 +1,7 @@
+.standalone-transparent-component {
+  @apply rounded-xl p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur;
+}
+
+.white-transparent-component {
+  @apply standalone-transparent-component bg-white/[0.07] disabled:bg-white/[0.03];
+}

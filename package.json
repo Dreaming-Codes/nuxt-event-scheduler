@@ -21,6 +21,7 @@
     "nuxt": "3.0.0",
     "nuxt-headlessui": "^1.1.1",
     "nuxt-icon": "^0.2.10",
+    "nuxt-socket-io": "^3.0.12",
     "prisma": "^4.9.0",
     "sass": "^1.58.0"
   }

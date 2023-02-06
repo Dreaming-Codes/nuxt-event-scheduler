@@ -10,7 +10,7 @@ const isOpen = ref(false);
 
 <template>
   <div>
-    <div class="main-transparency">
+    <div class="white-transparent-component hover:bg-white/[0.2] transition-colors">
       <div class="flex place-content-between ">
         <p>{{ name.length > 30 ? name.slice(0, 29) + "…" : name }}</p>
         <button @click="isOpen = true">
@@ -38,5 +38,4 @@ const isOpen = ref(false);
 </template>
 
 <style lang="scss" scoped>
-
 </style>

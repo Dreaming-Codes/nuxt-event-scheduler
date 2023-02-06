@@ -61,8 +61,8 @@ function openModal() {
               as="template"
           >
             <button
-                class="tabButton"
-                :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07] hover:text-white'"
+                class="tabButton transition-colors"
+                :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
             >
               {{ category }}
             </button>
@@ -80,7 +80,7 @@ function openModal() {
                 <li
                     v-for="post in posts"
                     :key="post.id"
-                    class="relative rounded-md p-3 hover:bg-white/[0.1]"
+                    class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                     @click="openModal"
                 >
                   <h3 class="text-sm font-medium leading-5">
@@ -104,7 +104,7 @@ function openModal() {
       <Dialog :isOpen="isOpen" title="LOGIN NECESSARIO" description="Per fare questa azione è necessario il login" @close="isOpen = false">
         <div class="mt-4 flex place-content-center">
           <button
-              class="main-transparency focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
               type="button"
               @click="isOpen = false"
           >

@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         '@morev/vue-transitions/nuxt',
         '@sidebase/nuxt-auth',
         '@nuxtjs/robots',
-        'nuxt-icon'
+        'nuxt-icon',
+        'nuxt-socket-io'
     ],
     auth: {
         isEnabled: true,
