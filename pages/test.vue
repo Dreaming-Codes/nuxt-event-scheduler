@@ -54,14 +54,14 @@ function openModal() {
   <Dialog :isOpen="isOpen" title="SICURO DI VOLER MANCARE?" description="Se manchi, ti verrà applicata un'assenza sul registro" @close="isOpen = false">
     <div class="mt-4 flex place-content-between">
       <button
-          class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 absent-button"
+          class="white-transparent-component absent-button"
           type="button"
           @click="isOpen = false"
       >
         Si, mi assenterò
       </button>
       <button
-          class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 next-button"
+          class="white-transparent-component next-button"
           type="button"
           @click="isOpen = false"
       >

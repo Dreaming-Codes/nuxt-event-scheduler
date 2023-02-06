@@ -74,7 +74,7 @@ function openModal() {
             <HeadlessTabPanel
                 v-for="(posts, idx) in Object.values(categories)"
                 :key="idx"
-                class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur focus:outline-none focus:ring-2"
+                class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
             >
               <ul>
                 <li
@@ -104,7 +104,7 @@ function openModal() {
       <Dialog :isOpen="isOpen" title="LOGIN NECESSARIO" description="Per fare questa azione è necessario il login" @close="isOpen = false">
         <div class="mt-4 flex place-content-center">
           <button
-              class="white-transparent-component focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+              class="white-transparent-component"
               type="button"
               @click="isOpen = false"
           >
@@ -118,6 +118,6 @@ function openModal() {
 
 <style lang="scss">
 .tabButton {
-  @apply w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none;
+  @apply w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400;
 }
 </style>
