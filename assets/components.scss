@@ -3,5 +3,5 @@
 }
 
 .white-transparent-component {
-  @apply standalone-transparent-component bg-white/[0.07] disabled:bg-white/[0.03];
+  @apply standalone-transparent-component text-white bg-white/[0.07] disabled:bg-white/[0.03];
 }
