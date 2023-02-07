@@ -1,4 +1,4 @@
-import {getSession} from "~/server/utils";
+import {checkParams, getSession} from "~/server/utils";
 import {PrismaClient} from "@prisma/client";
 import {H3Response} from "h3";
 
@@ -13,9 +13,11 @@ Body:
 }
  */
 export default defineEventHandler(async (event)=>{
-    const session = await getSession(event);
-
     const body = await readBody(event)
+
+    checkParams(body, ['event_id', 'round'])
+
+    const session = await getSession(event);
 
     await prisma.eventUser.upsert({
         where: {
