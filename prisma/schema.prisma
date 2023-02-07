@@ -31,6 +31,7 @@ model EventUser {
   event    Event     @relation(references: [id], fields: [eventId])
   user     User      @relation(references: [id], fields: [userId])
   joinedAt DateTime?
+  round    Int
 
   eventId Int
   userId  Int

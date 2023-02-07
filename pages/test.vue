@@ -1,24 +1,8 @@
 <script setup lang="ts">
-interface Event {
-  name: string,
-  description: string,
-  availableSlots: number
-}
+const config = useAppConfig()
+const { data, pending, error, refresh } = useFetch("/api/events");
 
-const selectedDay = ref(0);
-
-const events: Event[][] = []
-
-for(let j = 0; j < 3; j++) {
-  events[j] = [];
-  for (let i = 0; i < 20; i++) {
-    events[j].push({
-      name: `name of an activity from ${j} day`,
-      description: "description",
-      availableSlots: 3
-    })
-  }
-}
+const selectedRound = ref(0);
 
 const isOpen = ref(false)
 
@@ -34,17 +18,17 @@ function openModal() {
 
 <template>
   <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
-    Attività {{selectedDay }}
+    Scegli la attività per {{ config.DAYS[Math.floor(selectedRound / 2)] }} alle {{ config.HOURS[selectedRound % 2] }}
 
     <div class="mt-10 h-[70vh]">
       <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto ">
-        <Event v-for="event in events[selectedDay]" :availableSlots="event.availableSlots" class="my-4" :description="event.description" :name="event.name"/>
+        <Event v-for="event in data" :availableSlots="3" class="my-4" :description="event.description" :name="event.name"/>
       </div>
       <div class="mt-4 flex flex-row place-content-between">
         <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>
         <div class="mr-4">
-          <button class="white-transparent-component back-button transition-colors" @click="selectedDay--" :disabled="selectedDay <= 0">Indietro</button>
-          <button class="white-transparent-component next-button transition-colors ml-2" @click="selectedDay++" :disabled="selectedDay >= events.length - 1">Avanti</button>
+          <button class="white-transparent-component back-button transition-colors" @click="selectedRound--" :disabled="selectedRound <= 0">Indietro</button>
+          <button class="white-transparent-component next-button transition-colors ml-2" @click="selectedRound++" :disabled="selectedRound > (config.DAYS.length - 1) * 2">Avanti</button>
         </div>
 
       </div>

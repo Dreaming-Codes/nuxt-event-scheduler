@@ -1,42 +1,7 @@
 <script lang="ts" setup>
-const categories = ref({
-  LUNEDÌ: [
-    {
-      id: 1,
-      title: 'Lorem ipsum dolor sit amet',
-      date: '08:00',
-      subs: 23,
-    },
-    {
-      id: 2,
-      title: "Lorem ipsum dolor sit amet",
-      date: '08:30',
-      subs: 150,
-    },
-  ],
-  MARTEDÌ: [
-    {
-      id: 1,
-      title: 'Lorem ipsum dolor sit amet',
-      date: '08:00',
-      subs: 23,
-    }
-  ],
-  MERCOLEDÌ: [
-    {
-      id: 1,
-      title: 'Lorem ipsum dolor sit amet',
-      date: '08:00',
-      subs: 23,
-    },
-    {
-      id: 2,
-      title: "Lorem ipsum dolor sit amet",
-      date: '08:30',
-      subs: 150,
-    },
-  ],
-})
+const config = useAppConfig()
+
+const { data, pending, error, refresh } = useFetch("/api/events");
 
 const isOpen = ref(false)
 
@@ -55,7 +20,7 @@ function openModal() {
       <HeadlessTabGroup>
         <HeadlessTabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 backdrop-blur">
           <HeadlessTab
-              v-for="category in Object.keys(categories)"
+              v-for="category in config.DAYS"
               :key="category"
               v-slot="{ selected }"
               as="template"
@@ -72,27 +37,25 @@ function openModal() {
         <HeadlessTabPanels class="mt-2">
           <TransitionScale :duration="500" group>
             <HeadlessTabPanel
-                v-for="(posts, idx) in Object.values(categories)"
+                v-for="(_, idx) in config.DAYS"
                 :key="idx"
                 class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
             >
               <ul>
                 <li
-                    v-for="post in posts"
+                    v-for="post in data"
                     :key="post.id"
                     class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                     @click="openModal"
                 >
                   <h3 class="text-sm font-medium leading-5">
-                    {{ post.title }}
+                    {{ post.name }}
                   </h3>
 
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{ post.date }}</li>
-                    <li>&middot;</li>
-                    <li>{{ post.subs }} iscritti</li>
+                    <li>3 iscritti</li>
                   </ul>
                 </li>
               </ul>
