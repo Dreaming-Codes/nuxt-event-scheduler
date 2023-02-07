@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const config = useAppConfig()
 
-const { data, pending, error, refresh } = useFetch("/api/events");
+const { data, pending, error, refresh } = useFetch("/api/events/list");
 
 const isOpen = ref(false)
 
@@ -64,7 +64,7 @@ function openModal() {
           </TransitionScale>
         </HeadlessTabPanels>
       </HeadlessTabGroup>
-      <Dialog :isOpen="isOpen" title="LOGIN NECESSARIO" description="Per fare questa azione è necessario il login" @close="isOpen = false">
+      <Dialog :isOpen="isOpen" title="REGISTRAZIONI CHIUSE" description="Ancora le registrazioni non sono aperte" @close="isOpen = false">
         <div class="mt-4 flex place-content-center">
           <button
               class="white-transparent-component"

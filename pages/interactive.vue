@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const config = useAppConfig()
-const { data, pending, error, refresh } = useFetch("/api/events");
+const { data, pending, error, refresh } = useFetch("/api/events/list");
 
 const selectedRound = ref(0);
 
