@@ -37,5 +37,5 @@ model EventUser {
   eventId Int
   userId  Int
 
-  @@id([userId, eventId])
+  @@id([userId, round])
 }
