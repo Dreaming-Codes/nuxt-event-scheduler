@@ -1,12 +1,14 @@
 {
   "private": true,
   "packageManager": "pnpm@7.22.0",
+  "type": "module",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare & prisma generate"
+    "postinstall": "nuxt prepare & prisma generate",
+    "seed": "npx ts-node ./prisma/seed.ts"
   },
   "devDependencies": {
     "@morev/vue-transitions": "^2.3.6",
