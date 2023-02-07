@@ -55,7 +55,7 @@ function openModal() {
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>3 iscritti</li>
+                    <li>{{post._count.EventUser}}/{{post.maxUsers}} iscritti</li>
                   </ul>
                 </li>
               </ul>
