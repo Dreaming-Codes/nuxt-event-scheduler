@@ -15,6 +15,7 @@ model Event {
   id          Int         @id @default(autoincrement())
   name        String
   description String
+  maxUsers    Int         @default(20)
   EventUser   EventUser[]
 }
 

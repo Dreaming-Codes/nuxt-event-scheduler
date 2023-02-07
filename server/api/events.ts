@@ -8,5 +8,13 @@ export default defineEventHandler(async (event)=>{
     //Call getSession to check if the user is authenticated
     await getSession(event);
 
-    return await prisma.event.findMany();
+    return await prisma.event.findMany({
+        include: {
+            _count: {
+                select: {
+                    EventUser: true
+                }
+            }
+        }
+    });
 })
