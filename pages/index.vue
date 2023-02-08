@@ -1,34 +1,14 @@
 <script lang="ts" setup>
 import {computed} from "@vue/reactivity";
+import {useGlobalStore} from "~/stores/global";
+
+const globalStore = useGlobalStore();
 
 const config = useAppConfig()
 
-const { data: events, pending, error, refresh } = useFetch("/api/events/list");
-
 const selected = ref(0);
-const {data: availableSlots} = useFetch("/api/events/availableSlots", {
-  watch: [selected],
-  params: {
-    round: selected,
-  }
-});
 
 const isOpen = ref(false)
-
-function availableSlotsForEvent(event: any){
-  if(!availableSlots.value){
-    return event.maxUsers;
-  }
-
-  // @ts-ignore
-  const slots =  availableSlots.value.find((slot) => slot.eventId === event.id)
-
-  if (!slots){
-    return event.maxUsers;
-  }
-
-  return event.maxUsers - slots._count;
-}
 function closeModal() {
   isOpen.value = false
 }
@@ -68,7 +48,7 @@ function openModal() {
             >
               <ul>
                 <li
-                    v-for="post in events"
+                    v-for="post in globalStore.events"
                     :key="post.id"
                     class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                     @click="openModal"
@@ -80,7 +60,7 @@ function openModal() {
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{availableSlotsForEvent(post)}}/{{post.maxUsers}} iscritti</li>
+                    <li>{{post.availableSlots && post.availableSlots[selected]  ? post.availableSlots[selected] : post.maxUsers}}/{{post.maxUsers}} iscritti</li>
                   </ul>
                 </li>
               </ul>

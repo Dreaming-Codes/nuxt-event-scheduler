@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import anime from "animejs";
+import {useGlobalStore} from "~/stores/global";
+
+useGlobalStore().fetchEvents();
 
 const config = useAppConfig()
 

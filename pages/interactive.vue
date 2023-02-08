@@ -1,34 +1,15 @@
 <script setup lang="ts">
+import {useGlobalStore} from "~/stores/global";
+import * as events from "events";
+
+const globalStore = useGlobalStore();
 const config = useAppConfig()
+
 const { data, pending, error, refresh } = useFetch("/api/events/list");
 
 const selectedRound = ref(0);
 
 const isOpen = ref(false)
-
-const {data: availableSlots} = useFetch("/api/events/availableSlots", {
-  watch: [selectedRound],
-  params: {
-    round: selectedRound,
-  }
-});
-
-
-function availableSlotsForEvent(event: any){
-  console.log(selectedRound.value)
-  if(!availableSlots.value){
-    return event.maxUsers;
-  }
-
-  // @ts-ignore
-  const slots =  availableSlots.value.find((slot) => slot.eventId === event.id)
-
-  if (!slots){
-    return event.maxUsers;
-  }
-
-  return event.maxUsers - slots._count;
-}
 
 function closeModal() {
   isOpen.value = false
@@ -46,7 +27,7 @@ function openModal() {
 
     <div class="mt-10 h-[70vh]">
       <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto ">
-        <Event v-for="event in data" :availableSlots="availableSlotsForEvent(event)" class="my-4" :description="event.description" :name="event.name"/>
+        <Event v-for="event in globalStore.events" :availableSlots="event.availableSlots && event.availableSlots[selectedRound]  ? event.availableSlots[selectedRound] : event.maxUsers" class="my-4" :description="event.description" :name="event.name"/>
       </div>
       <div class="mt-4 flex flex-row place-content-between">
         <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>
