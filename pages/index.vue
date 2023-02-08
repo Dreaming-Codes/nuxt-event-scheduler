@@ -76,7 +76,7 @@ function openModal() {
               type="button"
               @click="isOpen = false"
           >
-            LOGIN
+            OKAY
           </button>
         </div>
       </Dialog>
