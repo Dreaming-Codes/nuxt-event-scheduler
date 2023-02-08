@@ -1,6 +1,4 @@
 import {PrismaClient} from "@prisma/client";
-import {getServerSession} from "#auth";
-import {checkParams, getSession} from "~/server/utils";
 
 const prisma = new PrismaClient();
 

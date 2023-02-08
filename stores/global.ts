@@ -1,5 +1,4 @@
 import {defineStore} from "pinia";
-import {useFetch} from "#imports";
 
 export const useGlobalStore = defineStore('global', {
     state: () => {
@@ -9,13 +8,17 @@ export const useGlobalStore = defineStore('global', {
     },
     actions: {
         async fetchEvents() {
-            const { data, pending, error, refresh } = await useFetch("/api/events/list");
-            // @ts-ignore
-            this.events = data.value;
-            const {data: availableSlots} = await useFetch("/api/events/availableSlots");
-            if(!availableSlots.value){
+            const list = useFetch("/api/events/list");
+            const slots = useFetch("/api/events/slots");
+
+            const [{data}, {data: availableSlots}] = await Promise.all([list, slots]);
+
+            if(!data.value || !availableSlots.value){
                 return;
             }
+
+            this.events = data.value;
+
             availableSlots.value.forEach((slot: any) => {
                 if(slot.round != 0){
                     return;
