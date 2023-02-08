@@ -1,10 +1,34 @@
 <script lang="ts" setup>
+import {computed} from "@vue/reactivity";
+
 const config = useAppConfig()
 
-const { data, pending, error, refresh } = useFetch("/api/events/list");
+const { data: events, pending, error, refresh } = useFetch("/api/events/list");
+
+const selected = ref(0);
+const {data: availableSlots} = useFetch("/api/events/availableSlots", {
+  watch: [selected],
+  params: {
+    round: selected.value,
+  }
+});
 
 const isOpen = ref(false)
 
+function availableSlotsForEvent(event: any){
+  if(!availableSlots.value){
+    return event.maxUsers;
+  }
+
+  // @ts-ignore
+  const slots =  availableSlots.value.find((slot) => slot.eventId === event.id)
+
+  if (!slots){
+    return event.maxUsers;
+  }
+
+  return slots._count.eventId;
+}
 function closeModal() {
   isOpen.value = false
 }
@@ -20,8 +44,9 @@ function openModal() {
       <HeadlessTabGroup>
         <HeadlessTabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 backdrop-blur">
           <HeadlessTab
-              v-for="category in config.DAYS"
+              v-for="(category, index) in config.DAYS"
               :key="category"
+              @click="selected = index"
               v-slot="{ selected }"
               as="template"
           >
@@ -43,7 +68,7 @@ function openModal() {
             >
               <ul>
                 <li
-                    v-for="post in data"
+                    v-for="post in events"
                     :key="post.id"
                     class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                     @click="openModal"
@@ -55,7 +80,7 @@ function openModal() {
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{post._count.EventUser}}/{{post.maxUsers}} iscritti</li>
+                    <li>{{availableSlotsForEvent(post)}}/{{post.maxUsers}} iscritti</li>
                   </ul>
                 </li>
               </ul>
