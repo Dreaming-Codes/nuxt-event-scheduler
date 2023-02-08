@@ -7,28 +7,12 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event)=>{
     const query = getQuery(event);
 
-    checkParams(query as Record<string, string>, ["round"]);
-
-    if(query.eventId){
-        return await prisma.eventUser.groupBy({
-            by: ["eventId"],
-            where: {
-                round: Number(query.round),
-                eventId: Number(query.eventId)
-            },
-            _count: {
-                eventId: true
-            }
-        })
-    }
-
     return await prisma.eventUser.groupBy({
-        by: ["eventId"],
+        by: ["round", "eventId"],
         where: {
-            round: Number(query.round)
+            round: Number(query.round) || undefined,
+            eventId: Number(query.eventId) || undefined
         },
-        _count: {
-            eventId: true
-        }
-    })
+        _count: true
+    });
 })

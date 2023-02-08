@@ -6,6 +6,30 @@ const selectedRound = ref(0);
 
 const isOpen = ref(false)
 
+const {data: availableSlots} = useFetch("/api/events/availableSlots", {
+  watch: [selectedRound],
+  params: {
+    round: selectedRound,
+  }
+});
+
+
+function availableSlotsForEvent(event: any){
+  console.log(selectedRound.value)
+  if(!availableSlots.value){
+    return event.maxUsers;
+  }
+
+  // @ts-ignore
+  const slots =  availableSlots.value.find((slot) => slot.eventId === event.id)
+
+  if (!slots){
+    return event.maxUsers;
+  }
+
+  return event.maxUsers - slots._count;
+}
+
 function closeModal() {
   isOpen.value = false
 }
@@ -22,7 +46,7 @@ function openModal() {
 
     <div class="mt-10 h-[70vh]">
       <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto ">
-        <Event v-for="event in data" :availableSlots="event.maxUsers - event._count.EventUser" class="my-4" :description="event.description" :name="event.name"/>
+        <Event v-for="event in data" :availableSlots="availableSlotsForEvent(event)" class="my-4" :description="event.description" :name="event.name"/>
       </div>
       <div class="mt-4 flex flex-row place-content-between">
         <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>

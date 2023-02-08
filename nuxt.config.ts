@@ -9,7 +9,8 @@ export default defineNuxtConfig({
         '@sidebase/nuxt-auth',
         '@nuxtjs/robots',
         'nuxt-icon',
-        'nuxt-socket-io'
+        'nuxt-socket-io',
+        '@pinia/nuxt'
     ],
     auth: {
         isEnabled: true,

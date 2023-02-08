@@ -9,7 +9,7 @@ const selected = ref(0);
 const {data: availableSlots} = useFetch("/api/events/availableSlots", {
   watch: [selected],
   params: {
-    round: selected.value,
+    round: selected,
   }
 });
 
@@ -27,7 +27,7 @@ function availableSlotsForEvent(event: any){
     return event.maxUsers;
   }
 
-  return slots._count.eventId;
+  return event.maxUsers - slots._count;
 }
 function closeModal() {
   isOpen.value = false
