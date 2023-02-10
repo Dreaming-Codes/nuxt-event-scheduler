@@ -4,8 +4,6 @@ import {useGlobalStore} from "~/stores/global";
 const globalStore = useGlobalStore();
 const config = useAppConfig()
 
-const { data, pending, error, refresh } = useFetch("/api/events/list");
-
 const selectedRound = ref(0);
 
 const isOpen = ref(false)
