@@ -1,13 +1,12 @@
 import {checkParams, getSession} from "~/server/utils";
 import {PrismaClient} from "@prisma/client";
-import {H3Response} from "h3";
 
 const prisma = new PrismaClient();
 
 
 /*
 Body:
-{
+{imports
     "event_id": 1,
     "round": 1
 }

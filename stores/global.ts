@@ -8,21 +8,27 @@ export const useGlobalStore = defineStore('global', {
     },
     actions: {
         async fetchEvents() {
-            const list = useFetch("/api/events/list");
-            const slots = useFetch("/api/events/slots");
+            const {data} = await useFetch("/api/events/list");
 
-            const [{data}, {data: availableSlots}] = await Promise.all([list, slots]);
-
-            if(!data.value || !availableSlots.value){
+            if(!data.value){
                 return;
             }
 
             this.events = data.value;
+        },
+
+        async fetchCounts(round: number | undefined = undefined) {
+            const {data: availableSlots} = await useFetch("/api/events/slots", {
+                query: {
+                    round: round,
+                }
+            });
+
+            if(!availableSlots.value){
+                return;
+            }
 
             availableSlots.value.forEach((slot: any) => {
-                if(slot.round != 0){
-                    return;
-                }
                 const event = this.events.find((event: any) => event.id === slot.eventId);
                 if(!event){
                     return;

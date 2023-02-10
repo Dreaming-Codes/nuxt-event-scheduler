@@ -2,7 +2,9 @@
 import anime from "animejs";
 import {useGlobalStore} from "~/stores/global";
 
-useGlobalStore().fetchEvents();
+const globalStore = useGlobalStore();
+
+Promise.all([globalStore.fetchEvents(), globalStore.fetchCounts()]);
 
 const config = useAppConfig()
 
