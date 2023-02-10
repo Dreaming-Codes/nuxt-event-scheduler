@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/global";
-import * as events from "events";
 
 const globalStore = useGlobalStore();
 const config = useAppConfig()
@@ -19,6 +18,16 @@ function openModal() {
   isOpen.value = true
 }
 
+function prevRound() {
+  selectedRound.value--
+  globalStore.fetchCounts(selectedRound.value);
+}
+
+function nextRound() {
+  selectedRound.value++
+  globalStore.fetchCounts(selectedRound.value);
+}
+
 </script>
 
 <template>
@@ -32,8 +41,8 @@ function openModal() {
       <div class="mt-4 flex flex-row place-content-between">
         <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>
         <div class="mr-4">
-          <button class="white-transparent-component back-button transition-colors" @click="selectedRound--" :disabled="selectedRound <= 0">Indietro</button>
-          <button class="white-transparent-component next-button transition-colors ml-2" @click="selectedRound++" :disabled="selectedRound > (config.DAYS.length - 1) * 2">Avanti</button>
+          <button class="white-transparent-component back-button transition-colors" @click="prevRound" :disabled="selectedRound <= 0">Indietro</button>
+          <button class="white-transparent-component next-button transition-colors ml-2" @click="nextRound" :disabled="selectedRound > (config.DAYS.length - 1) * 2">Avanti</button>
         </div>
 
       </div>
