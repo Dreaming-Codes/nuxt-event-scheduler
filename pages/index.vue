@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import {computed} from "@vue/reactivity";
 import {useGlobalStore} from "~/stores/global";
 
 const globalStore = useGlobalStore();

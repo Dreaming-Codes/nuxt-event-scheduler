@@ -4,6 +4,7 @@ export const useGlobalStore = defineStore('global', {
     state: () => {
         return {
             events: [] as any[],
+            subscribedEvents: [] as (number | null)[],
         }
     },
     actions: {
@@ -18,17 +19,17 @@ export const useGlobalStore = defineStore('global', {
         },
 
         async fetchCounts(round: number | undefined = undefined) {
-            const {data: availableSlots} = await useFetch("/api/events/slots", {
+            const {data} = await useFetch("/api/events/slots", {
                 query: {
                     round: round,
                 }
             });
 
-            if(!availableSlots.value){
+            if(!data.value){
                 return;
             }
 
-            availableSlots.value.forEach((slot: any) => {
+            data.value.forEach((slot: any) => {
                 const event = this.events.find((event: any) => event.id === slot.eventId);
                 if(!event){
                     return;
@@ -38,6 +39,39 @@ export const useGlobalStore = defineStore('global', {
                 }
                 event.availableSlots[slot.round] = event.maxUsers - slot._count;
             });
+        },
+
+        async fetchUserEvents(round: number | number[] | undefined = undefined) {
+            const {data} = await useFetch("/api/events/user", {
+                query: {
+                    round: round,
+                }
+            });
+
+            if(!data.value){
+                return;
+            }
+
+            data.value.forEach((round) => {
+                this.subscribedEvents[round.round] = round.eventId;
+            });
+        },
+
+        async sendRoundChoice(round: number): Promise<boolean> {
+            console.log(this.subscribedEvents[round], round)
+            try{
+                await useFetch("/api/events/register", {
+                    method: "POST",
+                    body: {
+                        round: round,
+                        event_id: this.subscribedEvents[round]
+                    }
+                });
+                return true;
+            }catch (e){
+                console.error(e)
+                return false;
+            }
         }
     }
 })

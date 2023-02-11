@@ -2,7 +2,8 @@
 const props = defineProps<{
   name: string,
   description: string,
-  availableSlots: number
+  availableSlots: number,
+  checked: boolean
 }>();
 
 const isOpen = ref(false);
@@ -10,7 +11,10 @@ const isOpen = ref(false);
 
 <template>
   <div>
-    <div class="white-transparent-component hover:bg-white/[0.2] transition-colors">
+    <div
+        class="white-transparent-component hover:bg-white/[0.2] transition-colors"
+        :class="checked ? '!bg-green-500/[0.9]' : ''"
+    >
       <div class="flex place-content-between ">
         <p class="text-white">{{ name.length > 30 ? name.slice(0, 29) + "…" : name }}</p>
         <button @click="isOpen = true">

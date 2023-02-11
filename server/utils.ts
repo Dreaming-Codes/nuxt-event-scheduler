@@ -16,7 +16,7 @@ export function checkParams(params: Record<string, string>, expectedParams: stri
         missingParams = expectedParams
     }else{
         for (let param of expectedParams){
-            if (!params[param]){
+            if (params[param] == undefined){
                 missingParams.push(param)
             }
         }

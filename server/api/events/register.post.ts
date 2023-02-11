@@ -1,4 +1,4 @@
-import {checkParams, getSession} from "~/server/utils";
+import {checkParams, getSession, getSlots} from "~/server/utils";
 import {PrismaClient} from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -18,22 +18,52 @@ export default defineEventHandler(async (event)=>{
 
     const session = await getSession(event);
 
+    // @ts-ignore
+    const userId = Number(session.user.id)
+    const round = Number(body['round'])
+    const eventId = Number(body['event_id'])
+
+    const eventObj = (await prisma.event.findUnique({
+        where: {
+            id: eventId
+        },
+        select: {
+            maxUsers: true
+        }
+    }))
+    if(!eventObj){
+        throw createError({ statusMessage: `Event with id ${eventId} does not exist`, statusCode: 400 })
+    }
+    const maxUsers = eventObj.maxUsers;
+
+    const slots = await getSlots(prisma, round, eventId);
+    let count = 0;
+    if(slots.length > 0){
+        count = slots[0]._count;
+    }
+
+    if(count >= maxUsers){
+        throw createError({ statusMessage: `Event with id ${eventId} is full`, statusCode: 400 })
+    }
+
+    // This code is using the Prisma library to create or update an entry in a database table called "eventUser". The
+    // purpose of this code is to ensure that the "eventUser" table contains an entry with the specified userId, round,
+    // and eventId. If an entry with those values already exists, it will be updated, but if it does not exist, a new
+    // entry will be created.
     await prisma.eventUser.upsert({
         where: {
             userId_round: {
-                // @ts-ignore
-                userId: Number(session.user.id),
-                round: Number(body['round'])
+                userId: userId,
+                round: round
             }
         },
         update: {
-            eventId: Number(body['event_id']),
+            eventId: eventId
         },
         create: {
-            // @ts-ignore
-            userId: Number(session.user.id),
-            eventId: Number(body['event_id']),
-            round: Number(body['round'])
+            userId: userId,
+            eventId: eventId,
+            round: round
         }
     })
 
