@@ -4,11 +4,7 @@ import {useGlobalStore} from "~/stores/global";
 
 const globalStore = useGlobalStore();
 
-Promise.all([globalStore.fetchEvents(), globalStore.fetchCounts()]);
-
-if(process.client){
-  globalStore.fetchUserEvents()
-}
+Promise.all([globalStore.fetchEvents(), globalStore.fetchCounts(), globalStore.fetchUserEvents()]);
 
 const config = useAppConfig()
 
