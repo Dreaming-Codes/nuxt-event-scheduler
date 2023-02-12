@@ -68,7 +68,6 @@ export const useGlobalStore = defineStore('global', {
         },
 
         async sendRoundChoice(round: number): Promise<boolean> {
-            console.log(this.subscribedEvents[round], round)
             try{
                 await useFetch("/api/events/register", {
                     method: "POST",

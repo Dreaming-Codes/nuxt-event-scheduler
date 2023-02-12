@@ -3,6 +3,7 @@ import {useGlobalStore} from "~/stores/global";
 
 const globalStore = useGlobalStore();
 const config = useAppConfig()
+const router = useRouter();
 
 const selectedRound = ref(0);
 
@@ -28,8 +29,21 @@ function prevRound() {
   globalStore.fetchCounts(selectedRound.value);
 }
 
-function nextRound() {
-  globalStore.sendRoundChoice(selectedRound.value);
+//TODO: Add animation
+async function nextRound() {
+  let success = await globalStore.sendRoundChoice(selectedRound.value);
+  if(!success){
+    globalStore.subscribedEvents[selectedRound.value] = null;
+    globalStore.fetchCounts(selectedRound.value);
+    //TODO: Use a proper aler
+    alert("L'attività selezionata ha raggiunto la capienza massima")
+    return;
+  }
+  if(selectedRound.value > (config.DAYS.length - 1) * 2){
+    await useFetch("/api/events/done");
+    router.push("/");
+    return;
+  }
   selectedRound.value++;
   if(!globalStore.subscribedEvents[selectedRound.value]){
     globalStore.subscribedEvents[selectedRound.value] = null;
@@ -67,7 +81,7 @@ function nextRound() {
         <button class="white-transparent-component transition-colors absent-button" @click="openModal">Sono Assente</button>
         <div class="mr-4">
           <button class="white-transparent-component back-button transition-colors" @click="prevRound" :disabled="selectedRound <= 0">Indietro</button>
-          <button class="white-transparent-component next-button transition-colors ml-2" @click="nextRound" :disabled="!globalStore.subscribedEvents[selectedRound] || selectedRound > (config.DAYS.length - 1) * 2">Avanti</button>
+          <button class="white-transparent-component next-button transition-colors ml-2" @click="nextRound" :disabled="!globalStore.subscribedEvents[selectedRound]">Avanti</button>
         </div>
 
       </div>
