@@ -42,11 +42,21 @@ export const useGlobalStore = defineStore('global', {
         },
 
         async fetchUserEvents(round: number | number[] | undefined = undefined) {
-            const {data} = await useFetch("/api/events/user", {
+            const {data, pending} = await useFetch("/api/events/user", {
                 query: {
                     round: round,
                 }
             });
+
+            if(pending.value){
+                await new Promise((resolve)=>{
+                    watch(pending, (value)=>{
+                        if(!value){
+                            resolve(null);
+                        }
+                    })
+                })
+            }
 
             if(!data.value){
                 return;

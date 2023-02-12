@@ -31,7 +31,6 @@ function prevRound() {
 function nextRound() {
   globalStore.sendRoundChoice(selectedRound.value);
   selectedRound.value++;
-  globalStore.fetchCounts(selectedRound.value);
   if(!globalStore.subscribedEvents[selectedRound.value]){
     globalStore.subscribedEvents[selectedRound.value] = null;
   }
