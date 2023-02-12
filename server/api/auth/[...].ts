@@ -39,7 +39,6 @@ export default NuxtAuthHandler({
         async signIn({profile, user, email, account, credentials}){
             if(!process.env.EMAIL_DOMAIN){
                 throw "EMAIL_DOMAIN ENVIRONMENT VARIABLE MISSING"
-                return false;
             }
             return Boolean(profile?.email?.endsWith(process.env.EMAIL_DOMAIN));
         }
