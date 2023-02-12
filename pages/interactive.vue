@@ -41,7 +41,7 @@ async function nextRound() {
   }
   if(selectedRound.value > (config.DAYS.length - 1) * 2){
     await useFetch("/api/events/done");
-    router.push("/");
+    await useSession().signIn(undefined, {callbackUrl: "/"})
     return;
   }
   selectedRound.value++;
