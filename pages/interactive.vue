@@ -79,7 +79,7 @@ function nextRound() {
       <button
           class="white-transparent-component absent-button"
           type="button"
-          @click="isOpen = false"
+          @click="isOpen = false; globalStore.subscribedEvents[selectedRound] = null; nextRound()"
       >
         Si, mi assenterò
       </button>
