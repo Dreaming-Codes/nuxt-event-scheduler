@@ -14,14 +14,30 @@ Body:
 export default defineEventHandler(async (event)=>{
     const body = await readBody(event)
 
-    checkParams(body, ['event_id', 'round'])
+    checkParams(body, ['round'])
 
     const session = await getSession(event);
 
     // @ts-ignore
     const userId = Number(session.user.id)
-    const round = Number(body['round'])
-    const eventId = Number(body['event_id'])
+    const round = Number(body.round)
+
+    if(body.event_id == null){
+        await prisma.eventUser.delete({
+            where: {
+                userId_round: {
+                    round,
+                    userId
+                }
+            }
+        })
+
+        return null;
+    }
+
+    const eventId = Number(body.event_id)
+
+
 
     const eventObj = (await prisma.event.findUnique({
         where: {
