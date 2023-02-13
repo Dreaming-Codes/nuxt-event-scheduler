@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/global";
 
-definePageMeta({  middleware: ["interactive-done"]})
+//definePageMeta({  middleware: ["interactive-done"]})
 
 const globalStore = useGlobalStore();
 const config = useAppConfig()
