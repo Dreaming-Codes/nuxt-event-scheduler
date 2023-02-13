@@ -78,7 +78,7 @@ function openModal() {
               type="button"
               @click="router.push('/interactive')"
           >
-            OKAY
+            VAI
           </button>
         </div>
       </Dialog>
