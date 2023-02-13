@@ -41,8 +41,8 @@ function openModal() {
         <HeadlessTabPanels class="mt-2">
           <TransitionScale :duration="500" group>
             <HeadlessTabPanel
-                v-for="(_, idx) in config.DAYS.length * config.HOURS.length"
-                :key="idx"
+                v-for="(_, index) in config.DAYS.length * config.HOURS.length"
+                :key="index"
                 class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
             >
               <ul>
@@ -86,6 +86,6 @@ function openModal() {
 
 <style lang="scss">
 .tabButton {
-  @apply w-full rounded-lg py-9 text-xl font-medium leading-5 text-blue-100 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400;
+  @apply w-full rounded-lg py-9 text-[60%] sm:text-xl font-medium leading-5 text-blue-100 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400;
 }
 </style>
