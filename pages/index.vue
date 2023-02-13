@@ -58,6 +58,9 @@ function openModal() {
                   <h3 class="text-sm font-medium leading-5">
                     {{ post.name }}
                   </h3>
+                  <h6 class="text-sm font-light leading-5">
+                    {{post.description}}
+                  </h6>
 
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
