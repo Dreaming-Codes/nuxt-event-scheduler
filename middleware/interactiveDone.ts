@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-    const { status, signIn, data } = useSession()
+    const { status, data } = useSession()
 
     if (status.value === 'authenticated') {
         // @ts-ignore

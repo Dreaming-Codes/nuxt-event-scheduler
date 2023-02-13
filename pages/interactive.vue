@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/global";
 
-definePageMeta({  middleware: ["interactive-done"]})
-
 const globalStore = useGlobalStore();
 const config = useAppConfig()
-const router = useRouter();
 
-const selectedRound = ref(globalStore.subscribedEvents.length);
+const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0);
 
 const isOpen = ref(false)
 const isFullOpen = ref(false)

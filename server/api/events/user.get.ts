@@ -1,5 +1,5 @@
 import {PrismaClient} from "@prisma/client";
-import {getSession, getSlots} from "~/server/utils";
+import {getSession} from "~/server/utils";
 import {QueryValue} from "ufo";
 
 const prisma = new PrismaClient();
