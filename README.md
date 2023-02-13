@@ -11,12 +11,11 @@ pnpm install
 Make sure to create a `.env` file with the following content (or use the `.env.example` file):
 
 ```env
-DATABASE_URL="file:./dev.db"
 AUTH_SECRET=secret
 GOOGLE_CLIENT_ID=...
 GOOGLE_CLIENT_SECRET=...
 BASE_URL=http://localhost:3000
-EMAIL_DOMAIN=@itismeucci.com
+EMAIL_DOMAIN=itismeucci.com
 DATABASE_URL=postgress_url
 SHADOW_DATABASE_URL=postgress_url/postgres_shadow
 ```

@@ -23,21 +23,23 @@ export default defineEventHandler(async (event)=>{
     const round = Number(body.round)
 
     if(body.event_id == null){
-        await prisma.eventUser.delete({
-            where: {
-                userId_round: {
-                    round,
-                    userId
+        try {
+            await prisma.eventUser.delete({
+                where: {
+                    userId_round: {
+                        round,
+                        userId
+                    }
                 }
-            }
-        })
+            })
+        } catch (error) {
+            // ignoring the error
+        }
 
         return null;
     }
 
     const eventId = Number(body.event_id)
-
-
 
     const eventObj = (await prisma.event.findUnique({
         where: {
@@ -52,7 +54,7 @@ export default defineEventHandler(async (event)=>{
     }
     const maxUsers = eventObj.maxUsers;
 
-    const slots = await getSlots(prisma, round, eventId);
+    const slots = await getSlots(prisma, round, eventId, userId);
     let count = 0;
     if(slots.length > 0){
         count = slots[0]._count;
