@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import {useGlobalStore} from "~/stores/global";
+import {useRouter} from "#app";
 
 const globalStore = useGlobalStore();
 
 const config = useAppConfig()
+const router = useRouter();
 
 const selected = ref(0);
 
@@ -69,12 +71,12 @@ function openModal() {
           </TransitionScale>
         </HeadlessTabPanels>
       </HeadlessTabGroup>
-      <Dialog :isOpen="isOpen" title="REGISTRAZIONI CHIUSE" description="Ancora le registrazioni non sono aperte" @close="isOpen = false">
+      <Dialog :isOpen="isOpen" title="Modifica la tua registrazione" description="Sarai rendirizzato alla pagina interattiva per la registrazione" @close="isOpen = false">
         <div class="mt-4 flex place-content-center">
           <button
               class="white-transparent-component"
               type="button"
-              @click="isOpen = false"
+              @click="router.push('/interactive')"
           >
             OKAY
           </button>
