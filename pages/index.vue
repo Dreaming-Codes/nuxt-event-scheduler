@@ -23,8 +23,8 @@ function openModal() {
       <HeadlessTabGroup>
         <HeadlessTabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 backdrop-blur">
           <HeadlessTab
-              v-for="(category, index) in config.DAYS"
-              :key="category"
+              v-for="(_, index) in config.DAYS.length * config.HOURS.length"
+              :key="index"
               @click="selected = index"
               v-slot="{ selected }"
               as="template"
@@ -33,7 +33,7 @@ function openModal() {
                 class="tabButton transition-colors"
                 :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
             >
-              {{ category }}
+              {{ config.DAYS[Math.floor(index / config.HOURS.length)] }} {{ config.HOURS[index % config.HOURS.length] }}
             </button>
           </HeadlessTab>
         </HeadlessTabList>
@@ -41,7 +41,7 @@ function openModal() {
         <HeadlessTabPanels class="mt-2">
           <TransitionScale :duration="500" group>
             <HeadlessTabPanel
-                v-for="(_, idx) in config.DAYS"
+                v-for="(_, idx) in config.DAYS.length * config.HOURS.length"
                 :key="idx"
                 class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
             >
@@ -49,6 +49,7 @@ function openModal() {
                 <li
                     v-for="post in globalStore.events"
                     :key="post.id"
+                    :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
                     class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                     @click="openModal"
                 >
