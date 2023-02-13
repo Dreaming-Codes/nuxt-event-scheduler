@@ -16,14 +16,14 @@ async function main(){
     let done = 0;
 
     for (const line of file.split("\n")) {
-        const values = line.split(",").map((value) => value.trim());
+        const values = line.split("\t").map((value) => value.trim());
         parsed++;
         promises.push(new Promise(async ()=>{
             await prisma.event.create({
                 data: {
-                    name: values[0],
-                    description: values[1],
-                    maxUsers: parseInt(values[2]) || 0,
+                    name: values[0] + " " + values[1],
+                    description: values[2],
+                    maxUsers: parseInt(values[3]) || 0,
                 }
             });
             done++;
