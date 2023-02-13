@@ -21,7 +21,7 @@ async function main(){
         promises.push(new Promise(async ()=>{
             await prisma.event.create({
                 data: {
-                    name: values[0] + " " + values[1],
+                    name: `[${values[0]}] ${values[1]}`,
                     description: values[2],
                     maxUsers: parseInt(values[3]) || 0,
                 }
