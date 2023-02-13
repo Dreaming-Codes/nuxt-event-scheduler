@@ -23,7 +23,7 @@ async function main(){
                 data: {
                     name: values[0],
                     description: values[1],
-                    maxUsers: parseInt(values[2]) || 20,
+                    maxUsers: parseInt(values[2]) || 0,
                 }
             });
             done++;

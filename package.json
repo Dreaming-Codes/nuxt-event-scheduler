@@ -8,8 +8,10 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare & prisma generate",
-    "seed": "npx ts-node ./prisma/seed.ts"
+    "seed": "npx ts-node ./prisma/seed.ts",
+    "prisma": "prisma"
   },
+  
   "devDependencies": {
     "@morev/vue-transitions": "^2.3.6",
     "@nuxt/image-edge": "1.0.0-27919678.2f5b64b",

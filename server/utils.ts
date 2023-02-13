@@ -26,12 +26,13 @@ export function checkParams(params: Record<string, string>, expectedParams: stri
     }
 }
 
-export function getSlots(prisma: PrismaClient, round: number = NaN, eventId: number = NaN) {
+export function getSlots(prisma: PrismaClient, round: number = NaN, eventId: number = NaN, ignoreUser: number = NaN) {
     return prisma.eventUser.groupBy({
         by: ["round", "eventId"],
         where: {
             round: isNaN(round) ? undefined : round,
-            eventId: isNaN(eventId) ? undefined : eventId
+            eventId: isNaN(eventId) ? undefined : eventId,
+            userId: isNaN(ignoreUser) ? undefined : {not: ignoreUser}
         },
         _count: true
     })
