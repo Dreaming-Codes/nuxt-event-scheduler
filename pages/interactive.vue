@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/global";
 import {sleep} from "~/utils";
+import {useRouter} from "#app";
 
 const globalStore = useGlobalStore();
 const config = useAppConfig()
+const router = useRouter();
 
 const {
   status,
@@ -54,7 +56,8 @@ async function nextRound() {
     });
     showEndPhaseDialog.value = true;
     await sleep(2420);
-    await useSession().signIn(undefined, {callbackUrl: "/"})
+    await getSession({required: true});
+    router.push("/");
     return;
   }
   await globalStore.fetchCounts(selectedRound.value - 1);

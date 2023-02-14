@@ -34,9 +34,21 @@ export default NuxtAuthHandler({
             // @ts-ignore
             session.user.id = token.id;
             // @ts-ignore
-            session.user.interactiveDone = token.interactiveDone;
-            // @ts-ignore
             session.user.section = token.section;
+
+            const user = await prisma.user.findUnique({
+                where: {
+                    // @ts-ignore
+                    id: token.id
+                },
+                select: {
+                    interactiveDone: true
+                }
+            })
+
+            // @ts-ignore
+            session.user.interactiveDone = user.interactiveDone;
+
 
             return session;
         },
