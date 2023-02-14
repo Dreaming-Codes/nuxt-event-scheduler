@@ -7,47 +7,52 @@ const config = useAppConfig()
 
 const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0);
 
-const isOpen = ref(false)
-const isFullOpen = ref(false)
-const isDoneInteractivePhase = ref(false)
+const showAbsenceDialog = ref(false)
+const showEventFullDialog = ref(false)
+const showEndPhaseDialog = ref(false)
+const isLoadingNext = ref(false)
+const isLoadingPrev = ref(false)
 
 if(!globalStore.subscribedEvents[selectedRound.value]){
   globalStore.subscribedEvents[selectedRound.value] = null;
 }
 
-function prevRound() {
+async function prevRound() {
+  isLoadingPrev.value = true;
+  await globalStore.fetchCounts(selectedRound.value);
   selectedRound.value--;
   if(!globalStore.subscribedEvents[selectedRound.value]){
     globalStore.subscribedEvents[selectedRound.value] = null;
   }
-  globalStore.fetchCounts(selectedRound.value);
+  isLoadingPrev.value = false;
 }
 
 async function nextRound() {
+  isLoadingNext.value = true;
   let success = await globalStore.sendRoundChoice(selectedRound.value);
   if(!success){
     globalStore.subscribedEvents[selectedRound.value] = null;
-    globalStore.fetchCounts(selectedRound.value);
-    isFullOpen.value = true
+    await globalStore.fetchCounts(selectedRound.value);
+    showEventFullDialog.value = true;
+    isLoadingNext.value = false;
     return;
   }
   if(selectedRound.value > (config.DAYS.length - 1) * 2){
     await useFetch("/api/events/done", {
       method: 'POST'
     });
-    isDoneInteractivePhase.value = true;
+    showEndPhaseDialog.value = true;
     await sleep(2420);
     await useSession().signIn(undefined, {callbackUrl: "/"})
     return;
   }
-  //TODO: Add animation
+  await globalStore.fetchCounts(selectedRound.value - 1);
   selectedRound.value++;
   if(!globalStore.subscribedEvents[selectedRound.value]){
     globalStore.subscribedEvents[selectedRound.value] = null;
   }
-  globalStore.fetchCounts(selectedRound.value);
+  isLoadingNext.value = false;
 }
-
 </script>
 
 <template>
@@ -55,72 +60,77 @@ async function nextRound() {
     Scegli la attività per <b>{{ config.DAYS[Math.floor(selectedRound / 2)] }}</b> alle <b>{{ config.HOURS[selectedRound % 2] }}</b>
 
     <div class="mt-10 h-[70vh]">
-      <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto">
-        <HeadlessRadioGroup v-model="globalStore.subscribedEvents[selectedRound]">
-          <HeadlessRadioGroupOption
-              v-for="event in globalStore.events.filter(event =>
-              globalStore.subscribedEvents[selectedRound] == event.id
-              || (event.availableSlots && event.availableSlots[selectedRound] != null
-              ? event.availableSlots[selectedRound]
-              : event.maxUsers)
-              > 0)"
-              :value="event.id"
-              :key="event.id"
-              v-slot="{ checked }"
-          >
-            <Event
-                :availableSlots="event.availableSlots && event.availableSlots[selectedRound] != null  ? event.availableSlots[selectedRound] : event.maxUsers"
-                class="my-4"
-                :description="event.description"
-                :name="event.name"
-                :checked="checked"
-            />
-
-          </HeadlessRadioGroupOption>
-        </HeadlessRadioGroup>
-      </div>
+      <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)" mode="out-in">
+          <div class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto" :key="selectedRound">
+            <HeadlessRadioGroup v-model="globalStore.subscribedEvents[selectedRound]">
+              <HeadlessRadioGroupOption
+                  v-for="event in globalStore.events.filter(event =>
+                  globalStore.subscribedEvents[selectedRound] == event.id
+                  || (event.availableSlots && event.availableSlots[selectedRound] != null
+                  ? event.availableSlots[selectedRound]
+                  : event.maxUsers)
+                  > 0)"
+                  :value="event.id"
+                  :key="event.id"
+                  v-slot="{ checked }"
+              >
+                <Event
+                    :availableSlots="event.availableSlots && event.availableSlots[selectedRound] != null  ? event.availableSlots[selectedRound] : event.maxUsers"
+                    class="my-4"
+                    :description="event.description"
+                    :name="event.name"
+                    :checked="checked"
+                />
+              </HeadlessRadioGroupOption>
+            </HeadlessRadioGroup>
+          </div>
+      </TransitionScale>
       <div class="mt-4 flex flex-row place-content-between">
-        <button class="white-transparent-component transition-colors absent-button" @click="isOpen = true">Sono Assente</button>
+        <button class="white-transparent-component transition-colors absent-button" @click="showAbsenceDialog = true">Sono Assente</button>
         <div class="mr-4">
-          <button class="white-transparent-component back-button transition-colors" @click="prevRound" :disabled="selectedRound <= 0">Indietro</button>
-          <button class="white-transparent-component next-button transition-colors ml-2" @click="nextRound" :disabled="!globalStore.subscribedEvents[selectedRound]">Avanti</button>
+          <button class="white-transparent-component back-button transition-colors" @click="prevRound" :disabled="selectedRound <= 0 || (isLoadingPrev || isLoadingNext)">
+            <Icon class="mb-1" name="svg-spinners:eclipse" v-if="isLoadingPrev"/>
+            <span v-else>Indietro</span>
+          </button>
+          <button class="white-transparent-component next-button transition-colors ml-2" @click="nextRound" :disabled="!globalStore.subscribedEvents[selectedRound] || (isLoadingNext || isLoadingPrev)">
+            <Icon class="mb-1" name="svg-spinners:eclipse" v-if="isLoadingNext"/>
+            <span v-else>Avanti</span>
+          </button>
         </div>
-
       </div>
-
     </div>
   </div>
-  <Dialog :isOpen="isOpen" title="SICURO DI VOLER MANCARE?" description="Se manchi, ti verrà applicata un'assenza sul registro" @close="isOpen = false">
+  <Dialog :isOpen="showAbsenceDialog" title="SICURO DI VOLER MANCARE?" description="Se manchi, ti verrà applicata un'assenza sul registro" @close="showAbsenceDialog = false">
     <div class="mt-4 flex place-content-between">
       <button
           class="white-transparent-component absent-button"
           type="button"
-          @click="isOpen = false; globalStore.subscribedEvents[selectedRound] = null; nextRound()"
+          @click="showAbsenceDialog = false; globalStore.subscribedEvents[selectedRound] = null; nextRound()"
       >
         Si, mi assenterò
       </button>
       <button
           class="white-transparent-component next-button"
           type="button"
-          @click="isOpen = false"
+          @click="showAbsenceDialog = false"
       >
         No, ci sarò
       </button>
     </div>
   </Dialog>
-  <Dialog :isOpen="isFullOpen" title="L'EVENTO È PIENO" description="Scegli un altro evento" @close="isFullOpen = false">
+  <Dialog :isOpen="showEventFullDialog" title="L'EVENTO È PIENO" description="Scegli un altro evento" @close="showEventFullDialog = false">
     <div class="mt-4 flex place-content-center">
         <button
             class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-20"
             type="button"
-            @click="isFullOpen = false"
+            @click="showEventFullDialog = false"
         >
           OK
         </button>
       </div>
   </Dialog>
   
-  <Dialog :isOpen="isDoneInteractivePhase" title="Fatto!" description="Sarai reindirizzato alla lista dei corsi"> 
+  <Dialog :isOpen="showEndPhaseDialog" title="Fatto!" description="Sarai reindirizzato alla lista dei corsi"> 
   </Dialog>
 </template>
 
