@@ -33,8 +33,10 @@ export default NuxtAuthHandler({
         async session({session, token}){
             // @ts-ignore
             session.user.id = token.id;
-            // @ts-ignore
-            session.user.section = token.section;
+
+            const userToSet = {
+                section: token.section
+            }
 
             const user = await prisma.user.findUnique({
                 where: {
@@ -42,9 +44,21 @@ export default NuxtAuthHandler({
                     id: token.id
                 },
                 select: {
-                    interactiveDone: true
+                    interactiveDone: true,
+                    section: !userToSet.section
                 }
             })
+
+            if(!user){
+                throw "User not found"
+            }
+
+            if(!userToSet.section){
+                userToSet.section = user.section;
+            }
+
+            // @ts-ignore
+            session.user.section = userToSet.section;
 
             // @ts-ignore
             session.user.interactiveDone = user.interactiveDone;
