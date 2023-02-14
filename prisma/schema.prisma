@@ -25,6 +25,8 @@ model User {
   email           String      @unique
   EventUser       EventUser[]
   interactiveDone Boolean     @default(false)
+  section         Int         @default(1)
+  class           String?
 
   @@index([email])
 }

@@ -8,7 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare & prisma generate",
-    "seed": "npx ts-node ./prisma/seed.ts",
+    "seed-events": "npx ts-node ./prisma/seed-events.ts",
+    "seed-users": "npx ts-node ./prisma/seed-users.ts",
     "prisma": "prisma"
   },
   
