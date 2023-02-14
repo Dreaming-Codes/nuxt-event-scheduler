@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useGlobalStore} from "~/stores/global";
+import {sleep} from "~/utils";
 
 const globalStore = useGlobalStore();
 const config = useAppConfig()
@@ -8,6 +9,7 @@ const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.
 
 const isOpen = ref(false)
 const isFullOpen = ref(false)
+const isDoneInteractivePhase = ref(false)
 
 if(!globalStore.subscribedEvents[selectedRound.value]){
   globalStore.subscribedEvents[selectedRound.value] = null;
@@ -21,7 +23,6 @@ function prevRound() {
   globalStore.fetchCounts(selectedRound.value);
 }
 
-//TODO: Add animation
 async function nextRound() {
   let success = await globalStore.sendRoundChoice(selectedRound.value);
   if(!success){
@@ -34,9 +35,12 @@ async function nextRound() {
     await useFetch("/api/events/done", {
       method: 'POST'
     });
+    isDoneInteractivePhase.value = true;
+    await sleep(2420);
     await useSession().signIn(undefined, {callbackUrl: "/"})
     return;
   }
+  //TODO: Add animation
   selectedRound.value++;
   if(!globalStore.subscribedEvents[selectedRound.value]){
     globalStore.subscribedEvents[selectedRound.value] = null;
@@ -114,6 +118,9 @@ async function nextRound() {
           OK
         </button>
       </div>
+  </Dialog>
+  
+  <Dialog :isOpen="isDoneInteractivePhase" title="Fatto!" description="Sarai reindirizzato alla lista dei corsi"> 
   </Dialog>
 </template>
 
