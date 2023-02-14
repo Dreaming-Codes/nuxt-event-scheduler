@@ -13,7 +13,9 @@ export default NuxtAuthHandler({
                     where: {
                         email: profile.email
                     },
-                    update: {},
+                    update: {
+                        name: profile.name
+                    },
                     create: {
                         name: profile.name,
                         email: profile.email,
