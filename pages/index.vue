@@ -65,7 +65,7 @@ function openModal() {
                   <ul
                       class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : post.maxUsers}}/{{post.maxUsers}} iscritti</li>
+                    <li>{{post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : post.maxUsers}}/{{post.maxUsers}} posti rimanenti</li>
                   </ul>
                 </li>
               </ul>
