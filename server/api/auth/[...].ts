@@ -24,6 +24,7 @@ export default NuxtAuthHandler({
 
                 token.id = user.id;
                 token.interactiveDone = user.interactiveDone
+                token.section = user.section;
             }
 
             return token;
@@ -34,6 +35,8 @@ export default NuxtAuthHandler({
             session.user.id = token.id;
             // @ts-ignore
             session.user.interactiveDone = token.interactiveDone;
+            // @ts-ignore
+            session.user.section = token.section;
 
             return session;
         },
