@@ -5,6 +5,17 @@ import {sleep} from "~/utils";
 const globalStore = useGlobalStore();
 const config = useAppConfig()
 
+const {
+  status,
+  data,
+  lastRefreshedAt,
+  getCsrfToken,
+  getProviders,
+  getSession,
+  signIn,
+  signOut,
+} = useSession()
+
 const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0);
 
 const showAbsenceDialog = ref(false)
@@ -65,11 +76,12 @@ async function nextRound() {
             <HeadlessRadioGroup v-model="globalStore.subscribedEvents[selectedRound]">
               <HeadlessRadioGroupOption
                   v-for="event in globalStore.events.filter(event =>
-                  globalStore.subscribedEvents[selectedRound] == event.id
+                  data?.user?.section >= event.minimumSection
+                  && (globalStore.subscribedEvents[selectedRound] == event.id
                   || (event.availableSlots && event.availableSlots[selectedRound] != null
                   ? event.availableSlots[selectedRound]
                   : event.maxUsers)
-                  > 0)"
+                  > 0))"
                   :value="event.id"
                   :key="event.id"
                   v-slot="{ checked }"
