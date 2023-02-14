@@ -41,9 +41,13 @@ export default defineEventHandler(async (event)=>{
 
     const eventId = Number(body.event_id)
 
-    const eventObj = (await prisma.event.findUnique({
+    const eventObj = (await prisma.event.findFirst({
         where: {
-            id: eventId
+            id: eventId,
+            minimumSection: {
+                // @ts-ignore
+                lte: Number(session.user.section)
+            }
         },
         select: {
             maxUsers: true
