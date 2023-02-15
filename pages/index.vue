@@ -1,20 +1,20 @@
 <script lang="ts" setup>
-import {useGlobalStore} from "~/stores/global";
-import {useRouter} from "#app";
+import { useRouter } from '#app'
+import { useGlobalStore } from '~/stores/global'
 
-const globalStore = useGlobalStore();
+const globalStore = useGlobalStore()
 
 const config = useAppConfig()
-const router = useRouter();
+const router = useRouter()
 
-const selected = ref(0);
+const selected = ref(0)
 
 const isOpen = ref(false)
-function closeModal() {
+function closeModal () {
   isOpen.value = false
 }
 
-function openModal() {
+function openModal () {
   isOpen.value = true
 }
 </script>
@@ -25,15 +25,15 @@ function openModal() {
       <HeadlessTabGroup>
         <HeadlessTabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1 backdrop-blur">
           <HeadlessTab
-              v-for="(_, index) in config.DAYS.length * config.HOURS.length"
-              :key="index"
-              @click="selected = index"
-              v-slot="{ selected }"
-              as="template"
+            v-for="(_, index) in config.DAYS.length * config.HOURS.length"
+            :key="index"
+            v-slot="{ selected }"
+            as="template"
+            @click="selected = index"
           >
             <button
-                class="tabButton transition-colors"
-                :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
+              class="tabButton transition-colors"
+              :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
             >
               {{ config.DAYS[Math.floor(index / config.HOURS.length)] }} {{ config.HOURS[index % config.HOURS.length] }}
             </button>
@@ -41,45 +41,52 @@ function openModal() {
         </HeadlessTabList>
 
         <HeadlessTabPanels class="mt-2">
-          <TransitionScale :duration="500" group>
+          <TransitionScale
+            :duration="500"
+            group
+          >
             <HeadlessTabPanel
-                v-for="(_, index) in config.DAYS.length * config.HOURS.length"
-                :key="index"
-                class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
+              v-for="(_, index) in config.DAYS.length * config.HOURS.length"
+              :key="index"
+              class="rounded-xl bg-white/[0.07] p-3 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 backdrop-blur"
             >
               <ul>
                 <li
-                    v-for="post in globalStore.events"
-                    :key="post.id"
-                    :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
-                    class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
-                    @click="openModal"
+                  v-for="post in globalStore.events"
+                  :key="post.id"
+                  :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
+                  class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
+                  @click="openModal"
                 >
                   <h3 class="text-sm font-medium leading-5">
                     {{ post.name }}
                   </h3>
                   <h6 class="text-sm font-light leading-5">
-                    {{post.description}}
+                    {{ post.description }}
                   </h6>
 
                   <ul
-                      class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
+                    class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : post.maxUsers}}/{{post.maxUsers}} posti rimanenti</li>
+                    <li>{{ post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : post.maxUsers }}/{{ post.maxUsers }} posti rimanenti</li>
                   </ul>
                 </li>
               </ul>
             </HeadlessTabPanel>
-
           </TransitionScale>
         </HeadlessTabPanels>
       </HeadlessTabGroup>
-      <Dialog :isOpen="isOpen" title="Modifica la tua registrazione" description="Sarai rendirizzato alla pagina interattiva per la registrazione" @close="isOpen = false">
+      <Dialog
+        :is-open="isOpen"
+        title="Modifica la tua registrazione"
+        description="Sarai rendirizzato alla pagina interattiva per la registrazione"
+        @close="isOpen = false"
+      >
         <div class="mt-4 flex place-content-center">
           <button
-              class="white-transparent-component"
-              type="button"
-              @click="router.push('/interactive')"
+            class="white-transparent-component"
+            type="button"
+            @click="router.push('/interactive')"
           >
             VAI
           </button>

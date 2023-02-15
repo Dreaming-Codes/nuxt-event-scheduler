@@ -10,12 +10,14 @@
     "postinstall": "nuxt prepare & prisma generate",
     "seed-events": "npx ts-node ./prisma/seed-events.ts",
     "seed-users": "npx ts-node ./prisma/seed-users.ts",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "lint": "eslint --ext .ts,.js,.vue ."
   },
   "devDependencies": {
     "@morev/vue-transitions": "^2.3.6",
     "@nuxt/image-edge": "1.0.0-27919678.2f5b64b",
     "@nuxtjs/color-mode": "^3.2.0",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@nuxtjs/robots": "^3.0.0",
     "@nuxtjs/tailwindcss": "^6.4.0",
     "@pinia/nuxt": "^0.4.6",
@@ -25,6 +27,7 @@
     "@types/ws": "^8.5.4",
     "animejs": "^3.2.1",
     "daisyui": "^2.50.1",
+    "eslint": "^8.34.0",
     "next-auth": "4.19.2",
     "nuxt": "3.2.0",
     "nuxt-headlessui": "^1.1.1",
@@ -32,6 +35,7 @@
     "pinia": "^2.0.30",
     "prisma": "^4.10.1",
     "sass": "^1.58.0",
+    "typescript": "^4.9.5",
     "ws": "^8.12.0"
   },
   "volta": {
