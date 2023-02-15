@@ -33,7 +33,8 @@ export default defineNuxtConfig({
     tailwindcss: {
         config: {
             darkMode: 'class',
-            content: []
+            content: [],
+            plugins: [require('daisyui')]
         }
     },
     colorMode: {
