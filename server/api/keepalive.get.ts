@@ -4,4 +4,5 @@ const prisma = new PrismaClient();
 
 export default defineEventHandler(() => {
   prisma.$connect();
+  return null;
 });
