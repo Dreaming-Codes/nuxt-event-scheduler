@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client'
-import { checkParams, getSession, getSlots } from '~/server/utils'
+import { PrismaClient } from '@prisma/client';
+import { checkParams, getSession, getSlots } from '~/server/utils';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 /*
 Body:
@@ -11,15 +11,15 @@ Body:
 }
  */
 export default defineEventHandler(async(event) => {
-  const body = await readBody(event)
+  const body = await readBody(event);
 
-  checkParams(body, ['round'])
+  checkParams(body, ['round']);
 
-  const session = await getSession(event)
+  const session = await getSession(event);
 
   // @ts-ignore
-  const userId = Number(session.user.id)
-  const round = Number(body.round)
+  const userId = Number(session.user.id);
+  const round = Number(body.round);
 
   if (body.event_id == null) {
     try {
@@ -30,15 +30,15 @@ export default defineEventHandler(async(event) => {
             userId
           }
         }
-      })
+      });
     } catch (error) {
       // ignoring the error
     }
 
-    return null
+    return null;
   }
 
-  const eventId = Number(body.event_id)
+  const eventId = Number(body.event_id);
 
   const eventObj = (await prisma.event.findFirst({
     where: {
@@ -51,20 +51,20 @@ export default defineEventHandler(async(event) => {
     select: {
       maxUsers: true
     }
-  }))
+  }));
   if (!eventObj) {
-    throw createError({ statusMessage: `Event with id ${eventId} does not exist`, statusCode: 400 })
+    throw createError({ statusMessage: `Event with id ${eventId} does not exist`, statusCode: 400 });
   }
-  const maxUsers = eventObj.maxUsers
+  const maxUsers = eventObj.maxUsers;
 
-  const slots = await getSlots(prisma, round, eventId, userId)
-  let count = 0
+  const slots = await getSlots(prisma, round, eventId, userId);
+  let count = 0;
   if (slots.length > 0) {
-    count = slots[0]._count
+    count = slots[0]._count;
   }
 
   if (count >= maxUsers) {
-    throw createError({ statusMessage: `Event with id ${eventId} is full`, statusCode: 400 })
+    throw createError({ statusMessage: `Event with id ${eventId} is full`, statusCode: 400 });
   }
 
   // This code is using the Prisma library to create or update an entry in a database table called "eventUser". The
@@ -86,7 +86,7 @@ export default defineEventHandler(async(event) => {
       eventId,
       round
     }
-  })
+  });
 
-  return null
-})
+  return null;
+});

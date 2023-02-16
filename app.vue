@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import anime from 'animejs'
-import { useGlobalStore } from '~/stores/global'
+import anime from 'animejs';
+import { useGlobalStore } from '~/stores/global';
 
-const globalStore = useGlobalStore()
+const globalStore = useGlobalStore();
 
-Promise.all([globalStore.fetchEvents(), globalStore.fetchCounts(), globalStore.fetchUserEvents()])
+Promise.all([globalStore.fetchEvents(), globalStore.fetchCounts(), globalStore.fetchUserEvents()]);
 
-const config = useAppConfig()
+const config = useAppConfig();
 
-const themeColor = '#0F172A'
+const themeColor = '#0F172A';
 
 useHead({
   title: config.TITLE,
@@ -37,9 +37,9 @@ useHead({
   htmlAttrs: {
     lang: config.LANG
   }
-})
+});
 
-const animationFinished = ref(false)
+const animationFinished = ref(false);
 
 onMounted(() => {
   anime({
@@ -52,10 +52,10 @@ onMounted(() => {
     autoplay: true,
     delay: 500,
     complete() {
-      animationFinished.value = true
+      animationFinished.value = true;
     }
-  })
-})
+  });
+});
 </script>
 
 <template>

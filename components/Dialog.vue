@@ -3,12 +3,12 @@ defineProps<{
   isOpen: boolean,
   title: string,
   description: string,
-}>()
+}>();
 
 // eslint-disable-next-line func-call-spacing
 const emit = defineEmits<{
   (e: 'close'): void,
-}>()
+}>();
 </script>
 
 <template>

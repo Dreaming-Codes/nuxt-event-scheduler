@@ -4,9 +4,9 @@ defineProps<{
   description: string,
   availableSlots: number,
   checked: boolean
-}>()
+}>();
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 </script>
 
 <template>

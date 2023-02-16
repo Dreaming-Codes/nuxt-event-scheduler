@@ -1,10 +1,10 @@
-import { PrismaClient } from '@prisma/client'
-import { getSession } from '~/server/utils'
+import { PrismaClient } from '@prisma/client';
+import { getSession } from '~/server/utils';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default defineEventHandler(async(event) => {
-  const session = await getSession(event)
+  const session = await getSession(event);
 
   await prisma.user.update({
     where: {
@@ -14,7 +14,7 @@ export default defineEventHandler(async(event) => {
     data: {
       interactiveDone: true
     }
-  })
+  });
 
-  return null
-})
+  return null;
+});

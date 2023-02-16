@@ -6,5 +6,5 @@ export default defineEventHandler(() => {
     memory: process.memoryUsage(),
     uptime: process.uptime(),
     cpu: process.cpuUsage()
-  }
-})
+  };
+});

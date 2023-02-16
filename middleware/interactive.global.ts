@@ -1,12 +1,12 @@
 export default defineNuxtRouteMiddleware((to) => {
-  const { status, signIn, data } = useSession()
+  const { status, signIn, data } = useSession();
 
   if (status.value === 'authenticated') {
     // @ts-ignore
     if (!data?.value?.user.interactiveDone && to.name !== 'interactive') {
-      return navigateTo('/interactive')
+      return navigateTo('/interactive');
     }
-    return
+    return;
   }
 
   /**
@@ -14,5 +14,5 @@ export default defineNuxtRouteMiddleware((to) => {
      *
      * So to avoid calling it, we return it immeadiatly.
      */
-  return signIn(undefined, { callbackUrl: to.path }) as ReturnType<typeof navigateTo>
-})
+  return signIn(undefined, { callbackUrl: to.path }) as ReturnType<typeof navigateTo>;
+});

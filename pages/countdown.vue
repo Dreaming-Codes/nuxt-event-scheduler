@@ -1,32 +1,32 @@
 <script setup lang="ts">
 
-const dateToCountDown = new Date('2023-02-20T00:00:00+0100')
+const dateToCountDown = new Date('2023-02-20T00:00:00+0100');
 
-const secondsTillOpen = ref(Math.floor((dateToCountDown.getTime() - new Date().getTime()) / 1000))
+const secondsTillOpen = ref(Math.floor((dateToCountDown.getTime() - new Date().getTime()) / 1000));
 
 setTimeout(() => {
-  secondsTillOpen.value--
+  secondsTillOpen.value--;
 
   setInterval(() => {
-    secondsTillOpen.value--
-  }, 1000)
-}, 1000 - new Date().getMilliseconds())
+    secondsTillOpen.value--;
+  }, 1000);
+}, 1000 - new Date().getMilliseconds());
 
 const days = computed(() => {
-  return Math.floor(secondsTillOpen.value / 86400)
-})
+  return Math.floor(secondsTillOpen.value / 86400);
+});
 
 const hours = computed(() => {
-  return Math.floor((secondsTillOpen.value % 86400) / 3600)
-})
+  return Math.floor((secondsTillOpen.value % 86400) / 3600);
+});
 
 const minutes = computed(() => {
-  return Math.floor((secondsTillOpen.value % 3600) / 60)
-})
+  return Math.floor((secondsTillOpen.value % 3600) / 60);
+});
 
 const seconds = computed(() => {
-  return Math.floor(secondsTillOpen.value % 60)
-})
+  return Math.floor(secondsTillOpen.value % 60);
+});
 </script>
 <template>
   <!-- ChatGPT FTW -->
