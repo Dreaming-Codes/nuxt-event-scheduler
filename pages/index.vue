@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { useRouter } from '#app'
-import { useGlobalStore } from '~/stores/global'
+import { useRouter } from '#app';
+import { useGlobalStore } from '~/stores/global';
 
-const globalStore = useGlobalStore()
+const globalStore = useGlobalStore();
 
-const config = useAppConfig()
-const router = useRouter()
+const config = useAppConfig();
+const router = useRouter();
 
-const selected = ref(0)
+const selected = ref(0);
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 
 </script>
 

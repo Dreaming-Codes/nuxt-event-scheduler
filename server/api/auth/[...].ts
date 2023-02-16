@@ -1,8 +1,8 @@
-import GoogleProvider from 'next-auth/providers/google'
-import { PrismaClient } from '@prisma/client'
-import { NuxtAuthHandler } from '#auth'
+import GoogleProvider from 'next-auth/providers/google';
+import { PrismaClient } from '@prisma/client';
+import { NuxtAuthHandler } from '#auth';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
@@ -20,23 +20,23 @@ export default NuxtAuthHandler({
             name: profile.name,
             email: profile.email
           }
-        })
+        });
 
-        token.id = user.id
-        token.interactiveDone = user.interactiveDone
-        token.section = user.section
+        token.id = user.id;
+        token.interactiveDone = user.interactiveDone;
+        token.section = user.section;
       }
 
-      return token
+      return token;
     },
 
     async session({ session, token }) {
       // @ts-ignore
-      session.user.id = token.id
+      session.user.id = token.id;
 
       const userToSet = {
         section: token.section
-      }
+      };
 
       const user = await prisma.user.findUnique({
         where: {
@@ -47,28 +47,28 @@ export default NuxtAuthHandler({
           interactiveDone: true,
           section: !userToSet.section
         }
-      })
+      });
 
       if (!user) {
-        throw createError({ statusMessage: 'User not found', statusCode: 404 })
+        throw createError({ statusMessage: 'User not found', statusCode: 404 });
       }
 
       if (!userToSet.section) {
-        userToSet.section = user.section
+        userToSet.section = user.section;
       }
 
       // @ts-ignore
-      session.user.section = userToSet.section
+      session.user.section = userToSet.section;
 
       // @ts-ignore
-      session.user.interactiveDone = user.interactiveDone
+      session.user.interactiveDone = user.interactiveDone;
 
-      return session
+      return session;
     },
 
     signIn({ profile }) {
       // @ts-ignore
-      return Boolean(profile?.email?.endsWith(process.env.EMAIL_DOMAIN))
+      return Boolean(profile?.email?.endsWith(process.env.EMAIL_DOMAIN));
     }
   },
   providers: [
@@ -79,4 +79,4 @@ export default NuxtAuthHandler({
       authorization: 'https://accounts.google.com/o/oauth2/auth?response_type=code&hd=' + process.env.EMAIL_DOMAIN
     })
   ]
-})
+});

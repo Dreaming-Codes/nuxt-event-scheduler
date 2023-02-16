@@ -1,65 +1,65 @@
 <script setup lang="ts">
-import { useRouter } from '#app'
-import { useGlobalStore } from '~/stores/global'
-import { sleep } from '~/utils'
+import { useRouter } from '#app';
+import { useGlobalStore } from '~/stores/global';
+import { sleep } from '~/utils';
 
-const globalStore = useGlobalStore()
-const config = useAppConfig()
-const router = useRouter()
+const globalStore = useGlobalStore();
+const config = useAppConfig();
+const router = useRouter();
 
 const {
   data,
   getSession
-} = useSession()
+} = useSession();
 
-const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0)
+const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0);
 
-const showAbsenceDialog = ref(false)
-const showEventFullDialog = ref(false)
-const showEndPhaseDialog = ref(false)
-const isLoadingNext = ref(false)
-const isLoadingPrev = ref(false)
+const showAbsenceDialog = ref(false);
+const showEventFullDialog = ref(false);
+const showEndPhaseDialog = ref(false);
+const isLoadingNext = ref(false);
+const isLoadingPrev = ref(false);
 
 if (!globalStore.subscribedEvents[selectedRound.value]) {
-  globalStore.subscribedEvents[selectedRound.value] = null
+  globalStore.subscribedEvents[selectedRound.value] = null;
 }
 
 async function prevRound() {
-  isLoadingPrev.value = true
-  await globalStore.fetchCounts(selectedRound.value)
-  selectedRound.value--
+  isLoadingPrev.value = true;
+  await globalStore.fetchCounts(selectedRound.value);
+  selectedRound.value--;
   if (!globalStore.subscribedEvents[selectedRound.value]) {
-    globalStore.subscribedEvents[selectedRound.value] = null
+    globalStore.subscribedEvents[selectedRound.value] = null;
   }
-  isLoadingPrev.value = false
+  isLoadingPrev.value = false;
 }
 
 async function nextRound() {
-  isLoadingNext.value = true
-  const success = await globalStore.sendRoundChoice(selectedRound.value)
+  isLoadingNext.value = true;
+  const success = await globalStore.sendRoundChoice(selectedRound.value);
   if (!success) {
-    globalStore.subscribedEvents[selectedRound.value] = null
-    await globalStore.fetchCounts(selectedRound.value)
-    showEventFullDialog.value = true
-    isLoadingNext.value = false
-    return
+    globalStore.subscribedEvents[selectedRound.value] = null;
+    await globalStore.fetchCounts(selectedRound.value);
+    showEventFullDialog.value = true;
+    isLoadingNext.value = false;
+    return;
   }
   if (selectedRound.value > (config.DAYS.length - 1) * 2) {
     await useFetch('/api/events/done', {
       method: 'POST'
-    })
-    showEndPhaseDialog.value = true
-    await sleep(2420)
-    await getSession({ required: true })
-    router.push('/')
-    return
+    });
+    showEndPhaseDialog.value = true;
+    await sleep(2420);
+    await getSession({ required: true });
+    router.push('/');
+    return;
   }
-  await globalStore.fetchCounts(selectedRound.value - 1)
-  selectedRound.value++
+  await globalStore.fetchCounts(selectedRound.value - 1);
+  selectedRound.value++;
   if (!globalStore.subscribedEvents[selectedRound.value]) {
-    globalStore.subscribedEvents[selectedRound.value] = null
+    globalStore.subscribedEvents[selectedRound.value] = null;
   }
-  isLoadingNext.value = false
+  isLoadingNext.value = false;
 }
 </script>
 
