@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   ],
   auth: {
     isEnabled: true,
-    origin: 'https://forum.meucci.party',
+    origin: process.env.BASE_URL,
     basePath: '/api/auth',
     enableGlobalAppMiddleware: true
   },
