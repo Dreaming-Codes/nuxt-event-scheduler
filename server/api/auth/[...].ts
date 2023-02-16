@@ -7,7 +7,7 @@ const prisma = new PrismaClient()
 export default NuxtAuthHandler({
   secret: process.env.AUTH_SECRET,
   callbacks: {
-    async jwt ({ token, account, profile }) {
+    async jwt({ token, account, profile }) {
       if (account && profile && profile.email) {
         const user = await prisma.user.upsert({
           where: {
@@ -30,7 +30,7 @@ export default NuxtAuthHandler({
       return token
     },
 
-    async session ({ session, token }) {
+    async session({ session, token }) {
       // @ts-ignore
       session.user.id = token.id
 
@@ -50,7 +50,7 @@ export default NuxtAuthHandler({
       })
 
       if (!user) {
-        throw 'User not found'
+        throw createError({ statusMessage: 'User not found', statusCode: 404 })
       }
 
       if (!userToSet.section) {
@@ -66,10 +66,8 @@ export default NuxtAuthHandler({
       return session
     },
 
-    async signIn ({ profile, user, email, account, credentials }) {
-      if (!process.env.EMAIL_DOMAIN) {
-        throw 'EMAIL_DOMAIN ENVIRONMENT VARIABLE MISSING'
-      }
+    signIn({ profile }) {
+      // @ts-ignore
       return Boolean(profile?.email?.endsWith(process.env.EMAIL_DOMAIN))
     }
   },

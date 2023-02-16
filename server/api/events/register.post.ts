@@ -10,7 +10,7 @@ Body:
     "round": 1
 }
  */
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async(event) => {
   const body = await readBody(event)
 
   checkParams(body, ['round'])

@@ -1,4 +1,4 @@
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware(() => {
   const { status, data } = useSession()
 
   if (status.value === 'authenticated') {

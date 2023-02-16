@@ -17,7 +17,7 @@ let done = 0
 for (const line of file.split('\n')) {
   const values = line.split('\t').map(value => value.trim())
   parsed++
-  promises.push(new Promise(async () => {
+  promises.push(new Promise(async() => {
     await prisma.event.create({
       data: {
         name: `[${values[0]}] ${values[1]}`,

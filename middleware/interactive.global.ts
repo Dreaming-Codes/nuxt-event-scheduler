@@ -1,9 +1,9 @@
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware((to) => {
   const { status, signIn, data } = useSession()
 
   if (status.value === 'authenticated') {
     // @ts-ignore
-    if (!data?.value?.user.interactiveDone && to.name != 'interactive') {
+    if (!data?.value?.user.interactiveDone && to.name !== 'interactive') {
       return navigateTo('/interactive')
     }
     return
