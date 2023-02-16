@@ -4,7 +4,7 @@ import { getSession } from '~/server/utils'
 
 const prisma = new PrismaClient()
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async(event) => {
   const session = await getSession(event)
 
   const query = getQuery(event)

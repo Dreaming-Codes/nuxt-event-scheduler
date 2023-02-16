@@ -51,7 +51,7 @@ onMounted(() => {
     loop: false,
     autoplay: true,
     delay: 500,
-    complete () {
+    complete() {
       animationFinished.value = true
     }
   })
@@ -59,29 +59,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="background">
-    <div class="w-[108rem] flex-none flex justify-end">
-      <nuxt-img
-        alt="bg-effect"
-        format="webp"
-        class="w-[90rem] flex-none max-w-none"
-        decoding="async"
-        src="/bgdecdark.png"
-      />
-    </div>
-  </div>
-  <div id="pageContent">
-    <h1
-      id="title"
-      class="glow-strong text-transparent top-[50%] mx-auto text-[10vmin] md:text-8xl relative top-50 translate-y-[-50%] mb-6"
-    >
-      {{ config.TITLE }}
-    </h1>
-    <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)">
-      <div v-if="animationFinished">
-        <NuxtPage />
+  <div>
+    <div id="background">
+      <div class="w-[108rem] flex-none flex justify-end">
+        <nuxt-img
+          alt="bg-effect"
+          format="webp"
+          class="w-[90rem] flex-none max-w-none"
+          decoding="async"
+          src="/bgdecdark.png"
+        />
       </div>
-    </TransitionScale>
+    </div>
+    <div id="pageContent">
+      <h1
+        id="title"
+        class="glow-strong text-transparent top-[50%] mx-auto text-[10vmin] md:text-8xl relative top-50 translate-y-[-50%] mb-6"
+      >
+        {{ config.TITLE }}
+      </h1>
+      <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)">
+        <div v-if="animationFinished">
+          <NuxtPage />
+        </div>
+      </TransitionScale>
+    </div>
   </div>
 </template>
 

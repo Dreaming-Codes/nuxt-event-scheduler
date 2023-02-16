@@ -10,13 +10,7 @@ const router = useRouter()
 const selected = ref(0)
 
 const isOpen = ref(false)
-function closeModal () {
-  isOpen.value = false
-}
 
-function openModal () {
-  isOpen.value = true
-}
 </script>
 
 <template>
@@ -27,13 +21,13 @@ function openModal () {
           <HeadlessTab
             v-for="(_, index) in config.DAYS.length * config.HOURS.length"
             :key="index"
-            v-slot="{ selected }"
+            v-slot="{ selected: isSelected }"
             as="template"
             @click="selected = index"
           >
             <button
               class="tabButton transition-colors"
-              :class="selected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
+              :class="isSelected ? 'bg-white/[0.16] shadow': 'hover:bg-white/[0.07]'"
             >
               {{ config.DAYS[Math.floor(index / config.HOURS.length)] }} {{ config.HOURS[index % config.HOURS.length] }}
             </button>
@@ -56,7 +50,7 @@ function openModal () {
                   :key="post.id"
                   :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
                   class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
-                  @click="openModal"
+                  @click="isOpen = true"
                 >
                   <h3 class="text-sm font-medium leading-5">
                     {{ post.name }}

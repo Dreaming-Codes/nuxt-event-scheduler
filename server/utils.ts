@@ -2,7 +2,7 @@ import { H3Event } from 'h3'
 import { PrismaClient } from '@prisma/client'
 import { getServerSession } from '#auth'
 
-export async function getSession (event: H3Event): Promise<Awaited<ReturnType<typeof import('#auth').getServerSession>>> {
+export async function getSession(event: H3Event): Promise<Awaited<ReturnType<typeof import('#auth').getServerSession>>> {
   const session = await getServerSession(event)
   if (!session) {
     throw createError({ statusMessage: 'Unauthenticated', statusCode: 403 })
@@ -10,13 +10,13 @@ export async function getSession (event: H3Event): Promise<Awaited<ReturnType<ty
   return session
 }
 
-export function checkParams (params: Record<string, string>, expectedParams: string[]) {
+export function checkParams(params: Record<string, string>, expectedParams: string[]) {
   let missingParams = []
   if (!params) {
     missingParams = expectedParams
   } else {
     for (const param of expectedParams) {
-      if (params[param] == undefined) {
+      if (params[param] == null) {
         missingParams.push(param)
       }
     }
@@ -26,7 +26,7 @@ export function checkParams (params: Record<string, string>, expectedParams: str
   }
 }
 
-export function getSlots (prisma: PrismaClient, round = NaN, eventId = NaN, ignoreUser = NaN) {
+export function getSlots(prisma: PrismaClient, round = NaN, eventId = NaN, ignoreUser = NaN) {
   return prisma.eventUser.groupBy({
     by: ['round', 'eventId'],
     where: {

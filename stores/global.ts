@@ -8,7 +8,7 @@ export const useGlobalStore = defineStore('global', {
     }
   },
   actions: {
-    async fetchEvents () {
+    async fetchEvents() {
       const { data } = await useFetch('/api/events/list')
 
       if (!data.value) {
@@ -18,7 +18,7 @@ export const useGlobalStore = defineStore('global', {
       this.events = data.value
     },
 
-    async fetchCounts (round: number | undefined = undefined) {
+    async fetchCounts(round: number | undefined = undefined) {
       const { data } = await useFetch('/api/events/slots', {
         query: {
           round
@@ -41,7 +41,7 @@ export const useGlobalStore = defineStore('global', {
       })
     },
 
-    async fetchUserEvents (round: number | number[] | undefined = undefined) {
+    async fetchUserEvents(round: number | number[] | undefined = undefined) {
       const { data, pending } = await useFetch('/api/events/user', {
         query: {
           round
@@ -67,7 +67,7 @@ export const useGlobalStore = defineStore('global', {
       })
     },
 
-    async sendRoundChoice (round: number): Promise<boolean> {
+    async sendRoundChoice(round: number): Promise<boolean> {
       const { error } = await useFetch('/api/events/register', {
         method: 'POST',
         body: {

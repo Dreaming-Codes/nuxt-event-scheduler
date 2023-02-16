@@ -19,7 +19,7 @@ for (const line of file.split('\n')) {
   parsed++
   const className = values[1].substring(1, values[1].length).replaceAll('-', '')
   const section = parseInt(values[1][0])
-  promises.push(new Promise(async () => {
+  promises.push(new Promise(async() => {
     await prisma.user.upsert({
       where: {
         email: values[0]

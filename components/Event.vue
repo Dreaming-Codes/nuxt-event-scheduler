@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps<{
+defineProps<{
   name: string,
   description: string,
   availableSlots: number,
@@ -53,6 +53,3 @@ const isOpen = ref(false)
     </Dialog>
   </div>
 </template>
-
-<style lang="scss" scoped>
-</style>
