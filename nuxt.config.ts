@@ -15,8 +15,7 @@ export default defineNuxtConfig({
     isEnabled: true,
     origin: process.env.BASE_URL,
     basePath: '/api/auth',
-    enableGlobalAppMiddleware: true,
-    defaultProvider: 'google'
+    enableGlobalAppMiddleware: true
   },
   appConfig: {
     TITLE: 'FORUM MEUCCI',
