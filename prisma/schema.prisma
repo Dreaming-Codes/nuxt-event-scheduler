@@ -28,6 +28,7 @@ model User {
   interactiveDone Boolean     @default(false)
   section         Int         @default(1)
   class           String?
+  admin           Boolean     @default(false)
 
   @@index([email])
 }
@@ -37,9 +38,16 @@ model EventUser {
   user     User      @relation(references: [id], fields: [userId])
   joinedAt DateTime?
   round    Int
+  role     Role      @default(STUDENT)
 
   eventId Int
   userId  Int
 
   @@id([userId, round])
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  STAFF
 }
