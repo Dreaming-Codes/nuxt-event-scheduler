@@ -3,7 +3,8 @@
         "Vue.volar",
         "bradlc.vscode-tailwindcss",
         "syler.sass-indented",
-        "dbaeumer.vscode-eslint"
+        "dbaeumer.vscode-eslint",
+        "prisma.prisma"
     ],
     "unwantedRecommendations": [
         "vscode.typescript-language-features"
