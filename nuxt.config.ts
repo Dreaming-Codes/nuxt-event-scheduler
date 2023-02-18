@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     TITLE: 'FORUM MEUCCI',
     LANG: 'it',
     DESCRIPTION: "Pagina di registrazione per il forum dell'ITIS Meucci 2023",
+    COUNTDOWN_DAY: '2023-02-20T00:00:00+0100',
     DAYS: ['Martedì', 'Mercoledì', 'Giovedì'],
     HOURS: ['8:30', '11:00']
   },

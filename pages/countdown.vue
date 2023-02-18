@@ -1,6 +1,7 @@
 <script setup lang="ts">
+const config = useAppConfig();
 
-const dateToCountDown = new Date('2023-02-20T00:00:00+0100');
+const dateToCountDown = new Date(config.COUNTDOWN_DAY);
 
 const secondsTillOpen = ref(Math.floor((dateToCountDown.getTime() - new Date().getTime()) / 1000));
 
@@ -29,8 +30,7 @@ const seconds = computed(() => {
 });
 </script>
 <template>
-  <!-- ChatGPT FTW -->
-  <div class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
+  <div class="absolute translate-x-1/2 right-1/2 translate-y-1/2 bottom-1/2">
     <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
       <div class="flex flex-col">
         <span class="countdown font-mono text-[22vmin]">
