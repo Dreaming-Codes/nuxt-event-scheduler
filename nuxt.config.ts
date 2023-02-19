@@ -14,7 +14,8 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     origin: process.env.BASE_URL,
-    basePath: '/api/auth'
+    basePath: '/api/auth',
+    enableGlobalAppMiddleware: true
   },
   appConfig: {
     TITLE: 'FORUM MEUCCI',

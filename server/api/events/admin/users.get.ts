@@ -1,14 +1,15 @@
 import { PrismaClient } from '@prisma/client';
-import {checkParams, getCurrentRound} from '~/server/utils';
+import {checkParams} from '~/server/utils';
 
-const config = useRuntimeConfig();
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async(event) => {
-    const round = getCurrentRound(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
-    const query = getQuery(event) as Record<string, string>
+    const query = getQuery(event) as Record<string, string>;
 
     checkParams(query, ['eventId']);
+
+    //const round = getCurrentRound(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
+    const round = 1;
 
     const eventId = Number(query.eventId);
 
