@@ -4,12 +4,14 @@ import { useGlobalStore } from '~/stores/global';
 
 const globalStore = useGlobalStore();
 
+const {data: user} = useSession();
+
 const config = useAppConfig();
 const router = useRouter();
 
 const selected = ref(0);
 
-const isOpen = ref(false);
+const selectedEventId = ref(null);
 
 </script>
 
@@ -50,7 +52,7 @@ const isOpen = ref(false);
                   :key="post.id"
                   :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
                   class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
-                  @click="isOpen = true"
+                  @click="selectedEventId = post.id"
                 >
                   <h3 class="text-sm font-medium leading-5">
                     {{ post.name }}
@@ -71,16 +73,16 @@ const isOpen = ref(false);
         </HeadlessTabPanels>
       </HeadlessTabGroup>
       <Dialog
-        :is-open="isOpen"
-        title="Modifica la tua registrazione"
-        description="Sarai rendirizzato alla pagina interattiva per la registrazione"
-        @close="isOpen = false"
+        :is-open="Boolean(selectedEventId)"
+        :title="user?.user?.admin ? 'ADMIN' : 'Modifica la tua registrazione'"
+        :description="user?.user?.admin ? 'Sarai rendirizzato alla pagina admin' : 'Sarai rendirizzato alla pagina interattiva per la registrazione'"
+        @close="selectedEventId = null"
       >
         <div class="mt-4 flex place-content-center">
           <button
             class="white-transparent-component"
             type="button"
-            @click="router.push('/interactive')"
+            @click="user?.user?.admin ? router.push('/admin/' + selectedEventId) : router.push('/interactive')"
           >
             VAI
           </button>
