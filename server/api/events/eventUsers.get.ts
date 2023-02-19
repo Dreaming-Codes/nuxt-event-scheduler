@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { getCurrentRound } from '~/server/utils';
 
-const config = useAppConfig();
+const config = useRuntimeConfig();
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async() => {

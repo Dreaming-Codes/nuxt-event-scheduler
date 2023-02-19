@@ -14,9 +14,7 @@ export default defineNuxtConfig({
   auth: {
     isEnabled: true,
     origin: process.env.BASE_URL,
-    basePath: '/api/auth',
-    // TODO: Re enable this before the countdown ends.
-    enableGlobalAppMiddleware: false
+    basePath: '/api/auth'
   },
   appConfig: {
     TITLE: 'FORUM MEUCCI',
