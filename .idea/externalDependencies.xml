@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="app.teamhub" />
+    <plugin id="com.nekofar.milad.intellij.nuxtjs" />
+    <plugin id="mobi.hsz.idea.gitignore" />
+    <plugin id="org.intellij.prisma" />
+    <plugin id="org.jetbrains.plugins.vue" />
+    <plugin id="ru.adelf.idea.dotenv" />
+  </component>
+</project>
