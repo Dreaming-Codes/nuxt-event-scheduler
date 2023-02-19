@@ -14,16 +14,24 @@ const event = eventID?.name;
 // TODO: Here we need to query api to get the round name and the subscribed people to the round
 // eventID need to be sent
 
+function getRoundUsers(eventID: number): string[] {
+
+}
+
+const users = getRoundUsers(eventID);
 </script>
 
 <template>
   <div
     class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2"
   >
-    Sei sulla pagina del corso {{ event }}, lezione del giorno {{ config.DAYS[roundDay] }} alle {{ config.HOURS[roundHour] }}.
+    <!-- TODO: Here we need to show the round day and hour -->
+    Sei sulla pagina del corso {{ event }}.
     <HeadlessTabGroup>
       <HeadlessTabList>
-        <HeadlessTab />
+        <HeadlessTab v-for="user in users" :key="user.id">
+          {{ user.name }}
+        </HeadlessTab>
       </HeadlessTabList>
     </HeadlessTabGroup>
   </div>
