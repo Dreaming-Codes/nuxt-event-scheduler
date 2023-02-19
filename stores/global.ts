@@ -76,21 +76,6 @@ export const useGlobalStore = defineStore('global', {
         }
       });
       return !error.value;
-    },
-
-    async fetchEventUsers(eventId: number, round: number) {
-      const { data } = await useFetch('/api/events/eventUsers', {
-        query: {
-          eventId,
-          round
-        }
-      });
-
-      if (!data.value) return;
-
-      // IDK how to program backend
-
-      
     }
   }
 });
