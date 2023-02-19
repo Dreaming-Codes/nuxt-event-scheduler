@@ -38,7 +38,7 @@ export function getSlots(prisma: PrismaClient, round = NaN, eventId = NaN, ignor
   });
 }
 
-export function getCurrentRound(eventDay: string, hours: string[], hoursLength: number) {
+export function getCurrentRound(eventDay: string, hours: string[], hourLength: number) {
   const startDate = new Date(eventDay);
   let startDay = startDate.getDay() - 1;
   if (startDay === -1) {
@@ -60,23 +60,17 @@ export function getCurrentRound(eventDay: string, hours: string[], hoursLength: 
   }
 
   if (currentHour - parsedHours[0] < 0) {
-    throw createError({ statusMessage: 'User is too early', statusCode: 403 });
+    throw createError({ statusMessage: 'The user is too early', statusCode: 403 });
   }
-  if (currentHour - parsedHours[parsedHours.length - 1] > hoursLength) {
-    throw createError({ statusMessage: 'User is too late', statusCode: 403 });
+  if (currentHour - parsedHours[parsedHours.length - 1] > hourLength) {
+    throw createError({ statusMessage: 'The user is too late', statusCode: 403 });
   }
 
   const roundHour = parsedHours.findIndex((hour) => {
-    if (currentHour > hour && currentHour < hour + hoursLength) {
-      return true;
-    } else {
-      return false;
-    }
+    return currentHour > hour && currentHour < hour + hourLength;
   });
 
   const roundDay = currentDay - startDay;
-
-  const round = roundDayAndHourToRoundNumber(roundDay, roundHour);
 
   function roundDayAndHourToRoundNumber(day: number, hour: number) {
     const roundsInADay = hours.length;
@@ -85,5 +79,5 @@ export function getCurrentRound(eventDay: string, hours: string[], hoursLength: 
     return cycleStart + cyclePosition;
   }
 
-  return round;
+  return roundDayAndHourToRoundNumber(roundDay, roundHour);
 }
