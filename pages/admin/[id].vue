@@ -11,7 +11,7 @@ const {data: users} = useFetch("/api/events/admin/users", {
   params: {
     eventId
   },
-  default: ()=>{
+  default: () => {
     return {
       users: [],
       round: 0
@@ -23,9 +23,8 @@ const {data: users} = useFetch("/api/events/admin/users", {
 const event = computed(() => globalStore.events.find(
     event => event.id === eventId.value
 ));
-
-// TODO: Here we need to query api to get the round name and the subscribed people to the round
-// eventID need to be sent
+console.log(users.users)
+function sendPresence(user) {}
 </script>
 
 <template>
@@ -35,7 +34,7 @@ const event = computed(() => globalStore.events.find(
     <!-- TODO: Here we need to show the round day and hour -->
     Sei sulla pagina del corso {{ event.name }}.
     <div v-for="user in users.users">
-      {{ user.user.name }}
+      {{ user.user.name }} <input type="checkbox" class="toggle" />
     </div>
   </div>
 </template>
