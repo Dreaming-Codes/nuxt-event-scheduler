@@ -1,9 +1,16 @@
-import { PrismaClient } from '@prisma/client';
-import {checkParams} from '~/server/utils';
+import {PrismaClient} from '@prisma/client';
+import {checkParams, getSession} from '~/server/utils';
 
 const prisma = new PrismaClient();
 
-export default defineEventHandler(async(event) => {
+export default defineEventHandler(async (event) => {
+    const session = await getSession(event);
+
+    // @ts-ignore
+    if (!session.user.admin) {
+        throw createError({statusMessage: 'Unauthorized', statusCode: 401});
+    }
+
     const query = getQuery(event) as Record<string, string>;
 
     checkParams(query, ['eventId']);
@@ -13,10 +20,9 @@ export default defineEventHandler(async(event) => {
 
     const eventId = Number(query.eventId);
 
-    if(isNaN(eventId)) {
-        throw createError({ statusMessage: 'EventId should be a number', statusCode: 400 });
+    if (isNaN(eventId)) {
+        throw createError({statusMessage: 'EventId should be a number', statusCode: 400});
     }
-
 
 
     return {

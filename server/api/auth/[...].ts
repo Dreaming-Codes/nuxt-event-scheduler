@@ -23,7 +23,6 @@ export default NuxtAuthHandler({
         });
 
         token.id = user.id;
-        token.interactiveDone = user.interactiveDone;
         token.section = user.section;
       }
 
@@ -35,7 +34,8 @@ export default NuxtAuthHandler({
       session.user.id = token.id;
 
       const userToSet = {
-        section: token.section
+        section: token.section,
+        admin: token.admin
       };
 
       const user = await prisma.user.findUnique({
@@ -45,7 +45,8 @@ export default NuxtAuthHandler({
         },
         select: {
           interactiveDone: true,
-          section: !userToSet.section
+          section: !userToSet.section,
+          admin: true
         }
       });
 
@@ -56,6 +57,9 @@ export default NuxtAuthHandler({
       if (!userToSet.section) {
         userToSet.section = user.section;
       }
+
+      // @ts-ignore
+      session.user.admin = user.admin;
 
       // @ts-ignore
       session.user.section = userToSet.section;

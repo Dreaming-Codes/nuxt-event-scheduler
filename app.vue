@@ -79,7 +79,7 @@ onMounted(() => {
         {{ config.TITLE }}
       </h1>
       <TransitionScale easing="cubicBezier(0.3, 0.001, 0.2, 1)">
-        <div v-if="animationFinished">
+        <div v-show="animationFinished">
           <NuxtPage />
         </div>
       </TransitionScale>
