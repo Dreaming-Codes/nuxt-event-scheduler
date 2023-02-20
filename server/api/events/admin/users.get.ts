@@ -39,7 +39,8 @@ export default defineEventHandler(async (event) => {
                         name: true,
                         id: true,
                         section: true,
-                        class: true
+                        class: true,
+                        email: true
                     }
                 },
                 joinedAt: true,

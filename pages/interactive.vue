@@ -51,7 +51,7 @@ async function nextRound() {
     showEndPhaseDialog.value = true;
     await sleep(2420);
     await getSession({ required: true });
-    router.push('/');
+    await router.push('/');
     return;
   }
   await globalStore.fetchCounts(selectedRound.value - 1);
@@ -138,7 +138,7 @@ async function nextRound() {
       </div>
     </div>
     <Dialog
-      :is-open="showAbsenceDialog"
+      :is-open="Boolean(showAbsenceDialog)"
       title="SICURO DI VOLER MANCARE?"
       description="Se manchi, ti verrà applicata un'assenza sul registro"
       @close="showAbsenceDialog = false"
@@ -161,7 +161,7 @@ async function nextRound() {
       </div>
     </Dialog>
     <Dialog
-      :is-open="showEventFullDialog"
+      :is-open="Boolean(showEventFullDialog)"
       title="L'EVENTO È PIENO"
       description="Scegli un altro evento"
       @close="showEventFullDialog = false"
@@ -178,7 +178,7 @@ async function nextRound() {
     </Dialog>
 
     <Dialog
-      :is-open="showEndPhaseDialog"
+      :is-open="Boolean(showEndPhaseDialog)"
       title="Fatto!"
       description="Sarai reindirizzato alla lista dei corsi"
     />

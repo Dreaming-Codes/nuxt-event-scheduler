@@ -36,8 +36,6 @@ function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>
 function capitalizeEachWord(str: string) {
   return str.toLowerCase().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
 }
-
-// checkPresence() {}
 </script>
 
 <template>
@@ -49,7 +47,7 @@ function capitalizeEachWord(str: string) {
       <!-- for some reason, capitalize property does not work -->
       <div class="w-full">{{ capitalizeEachWord(user.user.name) || user.user.email }}</div>
       <div class="flex items-center ml-auto">
-        <input type="checkbox" class="toggle" :checked="user.user.checked"
+        <input type="checkbox" class="toggle toggle-success color-red" :checked="user.user.checked"
                @change="e => sendPresence(e, user)"/>
       </div>
     </div>
