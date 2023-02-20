@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {useGlobalStore} from '~/stores/global';
-import {getCurrentRoundSafe} from "~/shared/utils";
+import {ArrElement} from "~/shared/types";
 
 const route = useRoute();
 const globalStore = useGlobalStore();
@@ -12,19 +12,28 @@ const {data: users} = useFetch("/api/events/admin/users", {
   params: {
     eventId
   },
-  default: () => {
-    return {
-      users: [],
-      round: getCurrentRoundSafe(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH)
-    }
-  },
   watch: [eventId]
 })
 
 const event = computed(() => globalStore.events.find(
     event => event.id === eventId.value
 ));
-console.log(users.value?.users)
+
+if(!event.value) {
+  throw new Error("Event not found");
+}
+
+function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>["users"]>) {
+  useFetch("/api/events/admin/updateJoined", {
+    method: "POST",
+    body: {
+      userId: user.user.id,
+      present: (e.target as HTMLInputElement).checked
+    }
+  });
+}
+
+// checkPresence() {}
 </script>
 
 <template>
@@ -33,8 +42,8 @@ console.log(users.value?.users)
   >
     <!-- TODO: Here we need to show the round day and hour -->
     Sei sulla pagina del corso {{ event.name }}.
-    <div v-for="user in users.users">
-      {{ user.user.name }} <input type="checkbox" class="toggle" />
+    <div v-for="user in users?.users">
+      {{ user.user.name }} <input type="checkbox" class="toggle" :checked="user.user.checked" @change="e => sendPresence(e, user)"/>
     </div>
   </div>
 </template>
