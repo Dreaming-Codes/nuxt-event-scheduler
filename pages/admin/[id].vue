@@ -47,7 +47,7 @@ function capitalizeEachWord(str: string) {
     <div v-for="(user, index) in users?.users" :key="index"
          class="flex items-center p-2 mb-4">
       <!-- for some reason, capitalize property does not work -->
-      <div class="w-full capitalize">{{ capitalizeEachWord(user.user.name) || user.user.email }}</div>
+      <div class="w-full">{{ capitalizeEachWord(user.user.name) || user.user.email }}</div>
       <div class="flex items-center ml-auto">
         <input type="checkbox" class="toggle" :checked="user.user.checked"
                @change="e => sendPresence(e, user)"/>
