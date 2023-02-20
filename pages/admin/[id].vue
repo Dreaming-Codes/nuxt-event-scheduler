@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {useGlobalStore} from '~/stores/global';
+import {getCurrentRoundSafe} from "~/shared/utils";
 
 const route = useRoute();
 const globalStore = useGlobalStore();
@@ -14,7 +15,7 @@ const {data: users} = useFetch("/api/events/admin/users", {
   default: () => {
     return {
       users: [],
-      round: 0
+      round: getCurrentRoundSafe(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH)
     }
   },
   watch: [eventId]
@@ -23,8 +24,7 @@ const {data: users} = useFetch("/api/events/admin/users", {
 const event = computed(() => globalStore.events.find(
     event => event.id === eventId.value
 ));
-console.log(users.users)
-function sendPresence(user) {}
+console.log(users.value?.users)
 </script>
 
 <template>
