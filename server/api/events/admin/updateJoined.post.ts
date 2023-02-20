@@ -23,11 +23,11 @@ export default defineEventHandler(async (event) => {
         where: {
             userId_round: {
                 round: round,
-                userId: Number(body.userId)
+                userId: body.userId
             }
         },
         data: {
-            joinedAt: Boolean(body.present) ? new Date() : null
+            joinedAt: body.present ? new Date() : null
         }
     });
     return null;
