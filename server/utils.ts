@@ -74,3 +74,15 @@ export function getCurrentRound(eventDay: string, hours: string[], hourLength: n
 
     return roundDay * hours.length + roundHour + 1;
 }
+
+export function getCurrentRoundSafe(...args: Parameters<typeof getCurrentRound>): number {
+    try {
+        return getCurrentRound(...args);
+    } catch (e) {
+        if (process.env.NODE_ENV !== 'development') {
+            throw e;
+        }
+    }
+
+    return 0;
+}
