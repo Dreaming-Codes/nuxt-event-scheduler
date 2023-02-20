@@ -1,6 +1,7 @@
 import {PrismaClient} from '@prisma/client';
-import {checkParams, getSession} from '~/server/utils';
+import {checkParams, getCurrentRound, getSession} from '~/server/utils';
 
+const config = useRuntimeConfig();
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
@@ -15,8 +16,17 @@ export default defineEventHandler(async (event) => {
 
     checkParams(query, ['eventId']);
 
-    //const round = getCurrentRound(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
-    const round = 1;
+    console.log(config)
+
+    let round = 0;
+
+    try{
+        round = getCurrentRound(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
+    }catch (e) {
+        if(process.env.NODE_ENV !== 'development'){
+            throw e;
+        }
+    }
 
     const eventId = Number(query.eventId);
 
