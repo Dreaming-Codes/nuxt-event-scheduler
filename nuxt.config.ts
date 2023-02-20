@@ -30,7 +30,7 @@ export default defineNuxtConfig({
         isEnabled: true,
         origin: process.env.BASE_URL,
         basePath: '/api/auth',
-        enableGlobalAppMiddleware: true,
+        enableGlobalAppMiddleware: false,
     },
     appConfig: config,
     runtimeConfig: config,
