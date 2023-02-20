@@ -1,5 +1,6 @@
 import {PrismaClient} from '@prisma/client';
-import {checkParams, getCurrentRoundSafe, getSession} from '~/server/utils';
+import {checkParams, getSession} from '~/server/utils';
+import {getCurrentRoundSafe} from "~/shared/utils";
 
 const config = useRuntimeConfig();
 const prisma = new PrismaClient();
@@ -16,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event);
 
-    checkParams(body, ['userId']);
+    checkParams(body, ['userId', 'present']);
 
     await prisma.eventUser.update({
         where: {
@@ -26,7 +27,7 @@ export default defineEventHandler(async (event) => {
             }
         },
         data: {
-            joinedAt: new Date()
+            joinedAt: Boolean(body.present) ? new Date() : null
         }
     });
     return null;
