@@ -36,6 +36,7 @@ export default defineEventHandler(async (event) => {
                 user: {
                     select: {
                         name: true,
+                        id: true,
                         section: true,
                         class: true
                     }
