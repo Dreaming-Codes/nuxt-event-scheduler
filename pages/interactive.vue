@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import { useRouter } from '#app';
-import { useGlobalStore } from '~/stores/global';
-import { sleep } from '~/utils';
+<script lang="ts" setup>
+import {useRouter} from '#app';
+import {useGlobalStore} from '~/stores/global';
+import {sleep} from '~/utils';
 
 const globalStore = useGlobalStore();
 const config = useAppConfig();
@@ -12,7 +12,20 @@ const {
   getSession
 } = useSession();
 
-const selectedRound = ref(globalStore.subscribedEvents.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? globalStore.subscribedEvents.length : 0);
+
+const filteredSubscribedEvents = computed(() => {
+  for (let i = globalStore.subscribedEvents.length - 1; i >= 0; i--) {
+    if (globalStore.subscribedEvents[i] == null) {
+      globalStore.subscribedEvents.pop();
+    } else {
+      break;
+    }
+  }
+
+  return globalStore.subscribedEvents;
+});
+
+const selectedRound = ref(filteredSubscribedEvents.value.length <= (((config.DAYS.length - 1) * config.HOURS.length) + 1) ? filteredSubscribedEvents.value.length : 0);
 
 const showAbsenceDialog = ref(false);
 const showEventFullDialog = ref(false);
@@ -66,36 +79,37 @@ async function nextRound() {
 <template>
   <div>
     <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
-      Scegli la attività per <b>{{ config.DAYS[Math.floor(selectedRound / 2)] }}</b> alle <b>{{ config.HOURS[selectedRound % 2] }}</b>
+      Scegli la attività per <b>{{ config.DAYS[Math.floor(selectedRound / 2)] }}</b> alle
+      <b>{{ config.HOURS[selectedRound % 2] }}</b>
 
       <div class="mt-10 h-[70vh]">
         <TransitionScale
-          easing="cubicBezier(0.3, 0.001, 0.2, 1)"
-          mode="out-in"
+            easing="cubicBezier(0.3, 0.001, 0.2, 1)"
+            mode="out-in"
         >
           <div
-            :key="selectedRound"
-            class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto"
+              :key="selectedRound"
+              class="max-h-[85%] max-[290px]:max-h-[73%] min-[376px]:max-h-[90%] overflow-auto"
           >
             <HeadlessRadioGroup v-model="globalStore.subscribedEvents[selectedRound]">
               <HeadlessRadioGroupOption
-                v-for="event in globalStore.events.filter(event =>
+                  v-for="event in globalStore.events.filter(event =>
                   data?.user?.section >= event.minimumSection
                   && (globalStore.subscribedEvents[selectedRound] == event.id
                     || (event.availableSlots && event.availableSlots[selectedRound] != null
                       ? event.availableSlots[selectedRound]
                       : event.maxUsers)
                       > 0))"
-                :key="event.id"
-                v-slot="{ checked }"
-                :value="event.id"
+                  :key="event.id"
+                  v-slot="{ checked }"
+                  :value="event.id"
               >
                 <Event
-                  :available-slots="event.availableSlots && event.availableSlots[selectedRound] != null ? event.availableSlots[selectedRound] : event.maxUsers"
-                  class="my-4"
-                  :description="event.description"
-                  :name="event.name"
-                  :checked="checked"
+                    :available-slots="event.availableSlots && event.availableSlots[selectedRound] != null ? event.availableSlots[selectedRound] : event.maxUsers"
+                    :checked="checked"
+                    :description="event.description"
+                    :name="event.name"
+                    class="my-4"
                 />
               </HeadlessRadioGroupOption>
             </HeadlessRadioGroup>
@@ -103,33 +117,33 @@ async function nextRound() {
         </TransitionScale>
         <div class="mt-4 flex flex-row place-content-between">
           <button
-            class="white-transparent-component transition-colors absent-button"
-            @click="showAbsenceDialog = true"
+              class="white-transparent-component transition-colors absent-button"
+              @click="showAbsenceDialog = true"
           >
             Sono Assente
           </button>
           <div class="mr-4">
             <button
-              class="white-transparent-component back-button transition-colors"
-              :disabled="selectedRound <= 0 || (isLoadingPrev || isLoadingNext)"
-              @click="prevRound"
+                :disabled="selectedRound <= 0 || (isLoadingPrev || isLoadingNext)"
+                class="white-transparent-component back-button transition-colors"
+                @click="prevRound"
             >
               <Icon
-                v-if="isLoadingPrev"
-                class="mb-1"
-                name="svg-spinners:eclipse"
+                  v-if="isLoadingPrev"
+                  class="mb-1"
+                  name="svg-spinners:eclipse"
               />
               <span v-else>Indietro</span>
             </button>
             <button
-              class="white-transparent-component next-button transition-colors ml-2"
-              :disabled="!globalStore.subscribedEvents[selectedRound] || (isLoadingNext || isLoadingPrev)"
-              @click="nextRound"
+                :disabled="!globalStore.subscribedEvents[selectedRound] || (isLoadingNext || isLoadingPrev)"
+                class="white-transparent-component next-button transition-colors ml-2"
+                @click="nextRound"
             >
               <Icon
-                v-if="isLoadingNext"
-                class="mb-1"
-                name="svg-spinners:eclipse"
+                  v-if="isLoadingNext"
+                  class="mb-1"
+                  name="svg-spinners:eclipse"
               />
               <span v-else>Avanti</span>
             </button>
@@ -145,16 +159,16 @@ async function nextRound() {
     >
       <div class="mt-4 flex place-content-between">
         <button
-          class="white-transparent-component absent-button"
-          type="button"
-          @click="showAbsenceDialog = false; globalStore.subscribedEvents[selectedRound] = null; nextRound()"
+            class="white-transparent-component absent-button"
+            type="button"
+            @click="showAbsenceDialog = false; globalStore.subscribedEvents[selectedRound] = null; nextRound()"
         >
           Si, mi assenterò
         </button>
         <button
-          class="white-transparent-component next-button"
-          type="button"
-          @click="showAbsenceDialog = false"
+            class="white-transparent-component next-button"
+            type="button"
+            @click="showAbsenceDialog = false"
         >
           No, ci sarò
         </button>
@@ -168,9 +182,9 @@ async function nextRound() {
     >
       <div class="mt-4 flex place-content-center">
         <button
-          class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-20"
-          type="button"
-          @click="showEventFullDialog = false"
+            class="rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-20"
+            type="button"
+            @click="showEventFullDialog = false"
         >
           OK
         </button>
@@ -186,14 +200,15 @@ async function nextRound() {
 </template>
 
 <style lang="scss" scoped>
-.next-button{
+.next-button {
   @apply bg-emerald-900 hover:bg-emerald-800 disabled:bg-gray-500/[0.5];
 }
-.back-button{
+
+.back-button {
   @apply bg-sky-900 hover:bg-sky-800 disabled:bg-gray-500/[0.5];
 }
 
-.absent-button{
+.absent-button {
   @apply bg-red-900 hover:bg-red-800 disabled:bg-gray-500/[0.5];
 }
 </style>
