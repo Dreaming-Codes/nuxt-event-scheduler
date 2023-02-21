@@ -37,7 +37,7 @@ const isOpen = ref(false);
 
     <Dialog
       :description="description"
-      :is-open="isOpen"
+      :is-open="Boolean(isOpen)"
       title="INFO"
       @close="isOpen = false"
     >

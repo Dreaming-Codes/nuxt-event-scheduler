@@ -51,7 +51,7 @@ export default NuxtAuthHandler({
       });
 
       if (!user) {
-        throw createError({ statusMessage: 'User not found', statusCode: 404 });
+        throw createError({ statusMessage: 'User was not found', statusCode: 404 });
       }
 
       if (!userToSet.section) {

@@ -63,8 +63,8 @@ async function nextRound() {
     });
     showEndPhaseDialog.value = true;
     await sleep(2420);
-    await getSession({required: true});
-    router.push('/');
+    await getSession({ required: true });
+    await router.push('/');
     return;
   }
   await globalStore.fetchCounts(selectedRound.value - 1);
@@ -152,10 +152,10 @@ async function nextRound() {
       </div>
     </div>
     <Dialog
-        :is-open="showAbsenceDialog"
-        description="Se manchi, ti verrà applicata un'assenza sul registro"
-        title="SICURO DI VOLER MANCARE?"
-        @close="showAbsenceDialog = false"
+      :is-open="Boolean(showAbsenceDialog)"
+      title="SICURO DI VOLER MANCARE?"
+      description="Se manchi, ti verrà applicata un'assenza sul registro"
+      @close="showAbsenceDialog = false"
     >
       <div class="mt-4 flex place-content-between">
         <button
@@ -175,10 +175,10 @@ async function nextRound() {
       </div>
     </Dialog>
     <Dialog
-        :is-open="showEventFullDialog"
-        description="Scegli un altro evento"
-        title="L'EVENTO È PIENO"
-        @close="showEventFullDialog = false"
+      :is-open="Boolean(showEventFullDialog)"
+      title="L'EVENTO È PIENO"
+      description="Scegli un altro evento"
+      @close="showEventFullDialog = false"
     >
       <div class="mt-4 flex place-content-center">
         <button
@@ -192,9 +192,9 @@ async function nextRound() {
     </Dialog>
 
     <Dialog
-        :is-open="showEndPhaseDialog"
-        description="Sarai reindirizzato alla lista dei corsi"
-        title="Fatto!"
+      :is-open="Boolean(showEndPhaseDialog)"
+      title="Fatto!"
+      description="Sarai reindirizzato alla lista dei corsi"
     />
   </div>
 </template>

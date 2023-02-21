@@ -81,7 +81,7 @@ const shouldShowAdmin = computed(() => {
       <Dialog
         :is-open="Boolean(selectedEventId)"
         :title="shouldShowAdmin ? 'ADMIN' : 'Modifica la tua registrazione'"
-        :description="shouldShowAdmin ? 'Sarai rendirizzato alla pagina admin' : 'Sarai rendirizzato alla pagina interattiva per la registrazione'"
+        :description="shouldShowAdmin ? 'Sarai reindirizzato alla pagina admin' : 'Sarai reindirizzato alla pagina interattiva per la registrazione'"
         @close="selectedEventId = null"
       >
         <div class="mt-4 flex place-content-center">
