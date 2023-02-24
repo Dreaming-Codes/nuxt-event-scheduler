@@ -49,13 +49,15 @@ export default defineEventHandler(async(event) => {
       }
     },
     select: {
-      maxUsers: true
+      RoundMaxUsers: true
     }
   }));
   if (!eventObj) {
     throw createError({ statusMessage: `Event with id ${eventId} does not exist`, statusCode: 400 });
   }
-  const maxUsers = eventObj.maxUsers;
+
+  // @ts-ignore
+  const maxUsers = eventObj.RoundMaxUsers.find((maxUser) => maxUser.round === round).maxUsers;
 
   const slots = await getSlots(prisma, round, eventId, userId);
   let count = 0;

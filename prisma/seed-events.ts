@@ -21,8 +21,7 @@ for (const line of file.split('\n')) {
     await prisma.event.create({
       data: {
         name: `[${values[0]}] ${values[1]}`,
-        description: values[2],
-        maxUsers: parseInt(values[3]) || 0
+        description: values[2]
       }
     });
     done++;

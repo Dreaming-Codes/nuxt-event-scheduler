@@ -36,19 +36,11 @@ function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>
 function capitalizeEachWord(str: string) {
   return str.toLowerCase().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
 }
-
-/**
- * Removes the leading [room] and the trailing dot from the event name
- * @param str event name
- */
-function sanitizeEventName(str: string) {
-  return str.replace(/^\[.*?]\s*/, '').replace(/\.$/, '')
-}
 </script>
 
 <template>
   <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
-    Sei sulla pagina di appello del corso "{{ sanitizeEventName(event.name) }}".
+    Sei sulla pagina di appello del corso "{{ event.name }}".
     <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
       <div class="w-full text-left">Nome</div>
       <div class="flex items-center ml-auto">

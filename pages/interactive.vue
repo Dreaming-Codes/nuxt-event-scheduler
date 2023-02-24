@@ -98,14 +98,14 @@ async function nextRound() {
                   && (globalStore.subscribedEvents[selectedRound] == event.id
                     || (event.availableSlots && event.availableSlots[selectedRound] != null
                       ? event.availableSlots[selectedRound]
-                      : event.maxUsers)
+                      : globalStore.getMaxUsersByEvent(event, selectedRound))
                       > 0))"
                   :key="event.id"
                   v-slot="{ checked }"
                   :value="event.id"
               >
                 <Event
-                    :available-slots="event.availableSlots && event.availableSlots[selectedRound] != null ? event.availableSlots[selectedRound] : event.maxUsers"
+                    :available-slots="event.availableSlots && event.availableSlots[selectedRound] != null ? event.availableSlots[selectedRound] : globalStore.getMaxUsersByEvent(event, selectedRound)"
                     :checked="checked"
                     :description="event.description"
                     :name="event.name"

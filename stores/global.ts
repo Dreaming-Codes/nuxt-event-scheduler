@@ -37,7 +37,10 @@ export const useGlobalStore = defineStore('global', {
         if (!event.availableSlots) {
           event.availableSlots = [];
         }
-        event.availableSlots[slot.round] = event.maxUsers - slot._count;
+
+
+        //@ts-ignore
+        event.availableSlots[slot.round] = this.getMaxUsersByEvent(event, slot.round) - slot._count;
       });
     },
 
@@ -76,6 +79,24 @@ export const useGlobalStore = defineStore('global', {
         }
       });
       return !error.value;
+    },
+
+    getMaxUsersByEvent(event: any, round: number) {
+        if (!event) {
+            return 0;
+        }
+
+        //@ts-ignore
+        return event.RoundMaxUsers.find((maxUser) => maxUser.round === round).maxUsers;
+    },
+
+    getMaxUsersByEventId(round: number, eventId: number) {
+        const event = this.events.find((event: any) => event.id === eventId);
+        if (!event) {
+            return 0;
+        }
+
+        return this.getMaxUsersByEvent(event, round);
     }
-  }
+  },
 });

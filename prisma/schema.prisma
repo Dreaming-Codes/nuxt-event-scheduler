@@ -15,9 +15,10 @@ model Event {
   id             Int         @id @default(autoincrement())
   name           String
   description    String
-  maxUsers       Int         @default(20)
   EventUser      EventUser[]
   minimumSection Int         @default(0)
+
+  RoundMaxUsers RoundMaxUsers[]
 }
 
 model User {
@@ -44,6 +45,17 @@ model EventUser {
   userId  Int
 
   @@id([userId, round])
+}
+
+model RoundMaxUsers {
+  round   Int
+  eventId Int
+
+  maxUsers Int
+
+  event Event @relation(references: [id], fields: [eventId])
+
+  @@id([round, eventId])
 }
 
 enum Role {

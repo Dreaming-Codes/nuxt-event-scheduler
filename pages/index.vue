@@ -70,7 +70,7 @@ const shouldShowAdmin = computed(() => {
                   <ul
                     class="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500"
                   >
-                    <li>{{ post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : post.maxUsers }}/{{ post.maxUsers }} posti rimanenti</li>
+                    <li>{{ post.availableSlots && post.availableSlots[selected] != null ? post.availableSlots[selected] : globalStore.getMaxUsersByEvent(post, selected) }}/{{ globalStore.getMaxUsersByEvent(post, selected) }} posti rimanenti</li>
                   </ul>
                 </li>
               </ul>
