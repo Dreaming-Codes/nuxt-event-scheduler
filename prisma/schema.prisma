@@ -40,7 +40,6 @@ model EventUser {
   user     User      @relation(references: [id], fields: [userId])
   joinedAt DateTime?
   round    Int
-  role     Role      @default(STUDENT)
 
   eventId Int
   userId  Int
@@ -57,10 +56,4 @@ model RoundMaxUsers {
   event Event @relation(references: [id], fields: [eventId])
 
   @@id([round, eventId])
-}
-
-enum Role {
-  STUDENT
-  TEACHER
-  STAFF
 }
