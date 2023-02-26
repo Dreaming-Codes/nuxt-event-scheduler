@@ -1,13 +1,9 @@
 import {PrismaClient} from '@prisma/client';
 import {checkParams, getSession} from '~/server/utils';
-import {getCurrentRoundSafe} from "~/shared/utils";
 
-const config = useRuntimeConfig();
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-    const round = getCurrentRoundSafe(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
-
     const session = await getSession(event);
 
     // @ts-ignore
@@ -17,13 +13,20 @@ export default defineEventHandler(async (event) => {
 
     const body = await readBody(event);
 
-    checkParams(body, ['userId', 'present']);
+    checkParams(body, ['userId', 'present', 'round']);
+
+    const round = parseInt(body.round);
+    const userId = parseInt(body.userId);
+
+    if (isNaN(round) || isNaN(userId)) {
+        throw createError({statusMessage: 'Invalid round or user ID', statusCode: 400});
+    }
 
     await prisma.eventUser.update({
         where: {
             userId_round: {
-                round: round,
-                userId: body.userId
+                round,
+                userId
             }
         },
         data: {

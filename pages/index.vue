@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useRouter } from '#app';
 import { useGlobalStore } from '~/stores/global';
-import {getCurrentRoundSafe} from "~/shared/utils";
 
 const globalStore = useGlobalStore();
 
@@ -13,12 +12,6 @@ const router = useRouter();
 const selected = ref(0);
 
 const selectedEventId = ref(null);
-
-const shouldShowAdmin = computed(() => {
-  // @ts-ignore
-  return user?.value.user?.admin && getCurrentRoundSafe(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH) === selected.value;
-});
-
 </script>
 
 <template>
@@ -80,15 +73,15 @@ const shouldShowAdmin = computed(() => {
       </HeadlessTabGroup>
       <Dialog
         :is-open="Boolean(selectedEventId)"
-        :title="shouldShowAdmin ? 'ADMIN' : 'Modifica la tua registrazione'"
-        :description="shouldShowAdmin ? 'Sarai reindirizzato alla pagina admin' : 'Sarai reindirizzato alla pagina interattiva per la registrazione'"
+        :title="user?.user?.admin  ? 'ADMIN' : 'Modifica la tua registrazione'"
+        :description="user?.user?.admin  ? 'Sarai reindirizzato alla pagina admin' : 'Sarai reindirizzato alla pagina interattiva per la registrazione'"
         @close="selectedEventId = null"
       >
         <div class="mt-4 flex place-content-center">
           <button
             class="white-transparent-component"
             type="button"
-            @click="shouldShowAdmin ? router.push('/admin/' + selectedEventId) : router.push('/interactive')"
+            @click="user?.user?.admin ? router.push(`/admin/${selected}/${selectedEventId}`) : router.push('/interactive')"
           >
             VAI
           </button>

@@ -1,13 +1,9 @@
 import {PrismaClient} from '@prisma/client';
 import {checkParams, getSession} from '~/server/utils';
-import {getCurrentRoundSafe} from "~/shared/utils";
 
-const config = useRuntimeConfig();
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
-    const round = getCurrentRoundSafe(config.EVENT_DAY, config.HOURS, config.HOURS_LENGTH);
-
     const session = await getSession(event);
 
     // @ts-ignore
@@ -20,8 +16,9 @@ export default defineEventHandler(async (event) => {
     checkParams(query, ['eventId']);
 
     const eventId = Number(query.eventId);
+    const round = Number(query.round);
 
-    if (isNaN(eventId)) {
+    if (isNaN(eventId) || isNaN(round)) {
         throw createError({statusMessage: 'EventId should be a number', statusCode: 400});
     }
 
@@ -30,8 +27,8 @@ export default defineEventHandler(async (event) => {
         round,
         users: await prisma.eventUser.findMany({
             where: {
-                round: round,
-                eventId: eventId
+                round,
+                eventId
             },
             select: {
                 user: {

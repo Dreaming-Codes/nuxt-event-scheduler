@@ -1,19 +1,27 @@
 <script lang="ts" setup>
 import {useGlobalStore} from '~/stores/global';
 import {ArrElement} from "~/shared/types";
+import {onUnmounted} from "#imports";
 
 const route = useRoute();
 const globalStore = useGlobalStore();
-const config = useAppConfig();
 
+const round = computed(() => Number(route.params.round))
 const eventId = computed(() => Number(route.params.id))
 
 const {data: users} = useFetch("/api/events/admin/users", {
   params: {
-    eventId
+    eventId,
+    round
   },
   watch: [eventId]
 })
+
+//Fixes for a bug where past users would be shown until the fetch is done
+onUnmounted(()=>{
+  users.value = null;
+})
+
 
 const event = computed(() => globalStore.events.find(
     event => event.id === eventId.value
@@ -27,6 +35,7 @@ function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>
   useFetch("/api/events/admin/updateJoined", {
     method: "POST",
     body: {
+      round,
       userId: user.user.id,
       present: (e.target as HTMLInputElement).checked
     }

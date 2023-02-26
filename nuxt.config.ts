@@ -33,7 +33,6 @@ export default defineNuxtConfig({
         enableGlobalAppMiddleware: true,
     },
     appConfig: config,
-    runtimeConfig: config,
     nitro: {
         compressPublicAssets: true
     },
