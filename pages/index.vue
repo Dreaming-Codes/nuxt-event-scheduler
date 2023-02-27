@@ -49,6 +49,7 @@ const selectedEventId = ref(null);
                 <li
                   v-for="post in globalStore.events"
                   :key="post.id"
+                  v-show="globalStore.getMaxUsersByEvent(post, selected) > 0"
                   :class="globalStore.subscribedEvents[selected] === post.id ? '!bg-green-500/[0.9] !text-black' : ''"
                   class="relative rounded-md p-3 hover:bg-white/[0.1] transition-colors"
                   @click="selectedEventId = post.id"
