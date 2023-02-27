@@ -1,9 +1,8 @@
 export default defineNuxtRouteMiddleware((to) => {
-    const { status, data } = useSession();
+    const { status } = useSession();
 
     if (status.value === "authenticated") {
-        // @ts-ignore
-        if (to.name !== "") {
+        if (to.name !== "index") {
             return navigateTo("/");
         }
     }
