@@ -1,4 +1,5 @@
 export default defineNuxtRouteMiddleware((to) => {
+  return;
   const { status, data } = useSession();
 
   if (status.value === 'authenticated') {
