@@ -1,26 +1,35 @@
 <script lang="ts" setup>
-import {useGlobalStore} from '~/stores/global';
+import {useGlobalStore} from "~/stores/global";
 import {ArrElement} from "~/shared/types";
 import {onUnmounted} from "#imports";
 
+const config = useAppConfig();
 const route = useRoute();
 const globalStore = useGlobalStore();
 
-const round = computed(() => Number(route.params.round))
-const eventId = computed(() => Number(route.params.id))
+const round = computed(() => Number(route.params.round));
+const eventId = computed(() => Number(route.params.id));
 
-const {data: users} = useFetch("/api/events/admin/users", {
+const roundInfo = computed(() => getDayAndHourFromRound(round.value));
+const day = computed(() => {
+  return config.DAYS[roundInfo.value.day];
+});
+const hour = computed(() => {
+  return config.HOURS[roundInfo.value.hour];
+});
+
+const { data: users } = useFetch("/api/events/admin/users", {
   params: {
     eventId,
     round
   },
   watch: [eventId]
-})
+});
 
-//Fixes for a bug where past users would be shown until the fetch is done
-onUnmounted(()=>{
+// Fixes for a bug where past users would be shown until the fetch is done
+onUnmounted(() => {
   users.value = null;
-})
+});
 
 
 const event = computed(() => globalStore.events.find(
@@ -45,11 +54,18 @@ function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>
 function capitalizeEachWord(str: string) {
   return str.toLowerCase().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
 }
+
+function getDayAndHourFromRound(round: number) {
+  const day = Math.floor(round / 2);
+  const hour = round % 2;
+  return { day, hour };
+}
 </script>
 
 <template>
   <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
-    Sei sulla pagina di appello del corso "{{ event.name }}".
+    Sei sulla pagina di appello del corso "{{ event.name }}". <br>
+    Lezione del {{ day }} alle {{ hour }}.
     <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
       <div class="w-full text-left">Nome</div>
       <div class="flex items-center ml-auto">
@@ -58,7 +74,9 @@ function capitalizeEachWord(str: string) {
     </div>
     <div v-for="(user, index) in users?.users" :key="index"
          class="flex items-center p-2 mb-1">
-      <div class="w-full text-left">{{user.user.section}}-{{user.user.class}} | {{ capitalizeEachWord(user.user.name) || user.user.email }}</div>
+      <div class="w-full text-left">{{ user.user.section }}-{{ user.user.class }} |
+        {{ capitalizeEachWord(user.user.name) || user.user.email }}
+      </div>
       <div class="flex items-center ml-auto">
         <input :checked="user.user.checked" class="toggle toggle-success color-red" type="checkbox"
                @change="e => sendPresence(e, user)"/>
