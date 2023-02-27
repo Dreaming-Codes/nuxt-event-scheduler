@@ -62,6 +62,10 @@ function capitalizeEachWord(str: string) {
         .join(" ");
 }
 
+function fromEmailToName(email: string) {
+    return capitalizeEachWord(email.split("@")[0].replace(/\./g, " "));
+}
+
 function getDayAndHourFromRound(round: number) {
     const day = Math.floor(round / 2);
     const hour = round % 2;
@@ -86,7 +90,10 @@ function getDayAndHourFromRound(round: number) {
         >
             <div class="w-full text-left">
                 {{ user.user.section }}-{{ user.user.class }} |
-                {{ capitalizeEachWord(user.user.name) || user.user.email }}
+                {{
+                    capitalizeEachWord(user.user.name) ||
+                    fromEmailToName(user.user.email)
+                }}
             </div>
             <div class="flex items-center ml-auto">
                 <input
