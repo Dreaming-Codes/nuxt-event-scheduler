@@ -1,29 +1,29 @@
 ::-webkit-scrollbar {
-  width: 17px;
+    width: 17px;
 }
 
 ::-webkit-scrollbar-track {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #d6dee1;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
+    background-color: #d6dee1;
+    border-radius: 20px;
+    border: 6px solid transparent;
+    background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+    background-color: #a8bbbf;
 }
 
 .overflow-overlay {
-  overflow: auto;
+    overflow: auto;
 }
 
 //noinspection CssInvalidPropertyValue
 @supports (overflow: overlay) {
-  .overflow-overlay {
-    overflow: overlay;
-  }
+    .overflow-overlay {
+        overflow: overlay;
+    }
 }

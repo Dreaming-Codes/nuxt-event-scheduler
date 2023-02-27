@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {useGlobalStore} from "~/stores/global";
-import {ArrElement} from "~/shared/types";
-import {onUnmounted} from "#imports";
+import { useGlobalStore } from "~/stores/global";
+import { ArrElement } from "~/shared/types";
+import { onUnmounted } from "#imports";
 
 const config = useAppConfig();
 const route = useRoute();
@@ -12,75 +12,89 @@ const eventId = computed(() => Number(route.params.id));
 
 const roundInfo = computed(() => getDayAndHourFromRound(round.value));
 const day = computed(() => {
-  return config.DAYS[roundInfo.value.day];
+    return config.DAYS[roundInfo.value.day];
 });
 const hour = computed(() => {
-  return config.HOURS[roundInfo.value.hour];
+    return config.HOURS[roundInfo.value.hour];
 });
 
 const { data: users } = useFetch("/api/events/admin/users", {
-  params: {
-    eventId,
-    round
-  },
-  watch: [eventId]
+    params: {
+        eventId,
+        round
+    },
+    watch: [eventId]
 });
 
 // Fixes for a bug where past users would be shown until the fetch is done
 onUnmounted(() => {
-  users.value = null;
+    users.value = null;
 });
 
-
-const event = computed(() => globalStore.events.find(
-    event => event.id === eventId.value
-));
+const event = computed(() =>
+    globalStore.events.find((event) => event.id === eventId.value)
+);
 
 if (!event.value) {
-  throw new Error("No event was found");
+    throw new Error("No event was found");
 }
 
-function sendPresence(e: Event, user: ArrElement<NonNullable<typeof users.value>["users"]>) {
-  useFetch("/api/events/admin/updateJoined", {
-    method: "POST",
-    body: {
-      round,
-      userId: user.user.id,
-      present: (e.target as HTMLInputElement).checked
-    }
-  });
+function sendPresence(
+    e: Event,
+    user: ArrElement<NonNullable<typeof users.value>["users"]>
+) {
+    useFetch("/api/events/admin/updateJoined", {
+        method: "POST",
+        body: {
+            round,
+            userId: user.user.id,
+            present: (e.target as HTMLInputElement).checked
+        }
+    });
 }
 
 function capitalizeEachWord(str: string) {
-  return str.toLowerCase().split(" ").map(word => word[0].toUpperCase() + word.slice(1)).join(" ");
+    return str
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word[0].toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 function getDayAndHourFromRound(round: number) {
-  const day = Math.floor(round / 2);
-  const hour = round % 2;
-  return { day, hour };
+    const day = Math.floor(round / 2);
+    const hour = round % 2;
+    return { day, hour };
 }
 </script>
 
 <template>
-  <div class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2">
-    Sei sulla pagina di appello del corso "{{ event.name }}". <br>
-    Lezione del {{ day }} alle {{ hour }}.
-    <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
-      <div class="w-full text-left">Nome</div>
-      <div class="flex items-center ml-auto">
-        Presente?
-      </div>
+    <div
+        class="white-transparent-component absolute translate-x-1/2 w-[90%] right-1/2"
+    >
+        Sei sulla pagina di appello del corso "{{ event.name }}". <br />
+        Lezione del {{ day }} alle {{ hour }}.
+        <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
+            <div class="w-full text-left">Nome</div>
+            <div class="flex items-center ml-auto">Presente?</div>
+        </div>
+        <div
+            v-for="(user, index) in users?.users"
+            :key="index"
+            class="flex items-center p-2 mb-1"
+        >
+            <div class="w-full text-left">
+                {{ user.user.section }}-{{ user.user.class }} |
+                {{ capitalizeEachWord(user.user.name) || user.user.email }}
+            </div>
+            <div class="flex items-center ml-auto">
+                <input
+                    :checked="user.user.checked"
+                    class="toggle toggle-success color-red"
+                    type="checkbox"
+                    @change="(e) => sendPresence(e, user)"
+                />
+            </div>
+        </div>
     </div>
-    <div v-for="(user, index) in users?.users" :key="index"
-         class="flex items-center p-2 mb-1">
-      <div class="w-full text-left">{{ user.user.section }}-{{ user.user.class }} |
-        {{ capitalizeEachWord(user.user.name) || user.user.email }}
-      </div>
-      <div class="flex items-center ml-auto">
-        <input :checked="user.user.checked" class="toggle toggle-success color-red" type="checkbox"
-               @change="e => sendPresence(e, user)"/>
-      </div>
-    </div>
-  </div>
 </template>

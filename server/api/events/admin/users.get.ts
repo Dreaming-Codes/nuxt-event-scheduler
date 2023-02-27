@@ -1,5 +1,5 @@
-import {PrismaClient} from '@prisma/client';
-import {checkParams, getSession} from '~/server/utils';
+import { PrismaClient } from "@prisma/client";
+import { checkParams, getSession } from "~/server/utils";
 
 const prisma = new PrismaClient();
 
@@ -8,20 +8,22 @@ export default defineEventHandler(async (event) => {
 
     // @ts-ignore
     if (!session.user.admin) {
-        throw createError({statusMessage: 'Unauthorized', statusCode: 401});
+        throw createError({ statusMessage: "Unauthorized", statusCode: 401 });
     }
 
     const query = getQuery(event) as Record<string, string>;
 
-    checkParams(query, ['eventId']);
+    checkParams(query, ["eventId"]);
 
     const eventId = Number(query.eventId);
     const round = Number(query.round);
 
     if (isNaN(eventId) || isNaN(round)) {
-        throw createError({statusMessage: 'EventId should be a number', statusCode: 400});
+        throw createError({
+            statusMessage: "EventId should be a number",
+            statusCode: 400
+        });
     }
-
 
     return {
         round,
@@ -40,7 +42,7 @@ export default defineEventHandler(async (event) => {
                         email: true
                     }
                 },
-                joinedAt: true,
+                joinedAt: true
             }
         })
     };

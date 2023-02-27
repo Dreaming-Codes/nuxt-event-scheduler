@@ -1,5 +1,5 @@
-import {PrismaClient} from '@prisma/client';
-import {checkParams, getSession} from '~/server/utils';
+import { PrismaClient } from "@prisma/client";
+import { checkParams, getSession } from "~/server/utils";
 
 const prisma = new PrismaClient();
 
@@ -8,18 +8,21 @@ export default defineEventHandler(async (event) => {
 
     // @ts-ignore
     if (!session.user.admin) {
-        throw createError({statusMessage: 'Unauthorized', statusCode: 401});
+        throw createError({ statusMessage: "Unauthorized", statusCode: 401 });
     }
 
     const body = await readBody(event);
 
-    checkParams(body, ['userId', 'present', 'round']);
+    checkParams(body, ["userId", "present", "round"]);
 
     const round = parseInt(body.round);
     const userId = parseInt(body.userId);
 
     if (isNaN(round) || isNaN(userId)) {
-        throw createError({statusMessage: 'Invalid round or user ID', statusCode: 400});
+        throw createError({
+            statusMessage: "Invalid round or user ID",
+            statusCode: 400
+        });
     }
 
     await prisma.eventUser.update({

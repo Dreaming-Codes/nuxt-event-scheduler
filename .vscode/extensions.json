@@ -6,7 +6,5 @@
         "dbaeumer.vscode-eslint",
         "prisma.prisma"
     ],
-    "unwantedRecommendations": [
-        "vscode.typescript-language-features"
-    ]
+    "unwantedRecommendations": ["vscode.typescript-language-features"]
 }
