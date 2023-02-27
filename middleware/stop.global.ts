@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
     if (status.value === 'authenticated') {
         // @ts-ignore
-        if(!data?.value?.user.admin) {
+        if(!data?.value?.user.admin && to.name !== 'pause') {
             return navigateTo('/pause');
         }
     }
