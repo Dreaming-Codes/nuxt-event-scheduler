@@ -54,6 +54,7 @@ function sendPresence(
 }
 
 function capitalizeEachWord(str: string) {
+    if (!str) return ""; // Fix when user hasn't logged in (the name is null)
     return str
         .toLowerCase()
         .split(" ")
