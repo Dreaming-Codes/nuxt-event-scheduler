@@ -2,6 +2,11 @@
 import { useGlobalStore } from "~/stores/global";
 import { ArrElement } from "~/shared/types";
 import { onUnmounted } from "#imports";
+import {
+    capitalizeEachWord,
+    fromEmailToName,
+    getDayAndHourFromRound
+} from "~/utils";
 
 const config = useAppConfig();
 const route = useRoute();
@@ -51,25 +56,6 @@ function sendPresence(
             present: (e.target as HTMLInputElement).checked
         }
     });
-}
-
-function capitalizeEachWord(str: string) {
-    if (!str) return ""; // Fix when user hasn't logged in (the name is null)
-    return str
-        .toLowerCase()
-        .split(" ")
-        .map((word) => word[0].toUpperCase() + word.slice(1))
-        .join(" ");
-}
-
-function fromEmailToName(email: string) {
-    return capitalizeEachWord(email.split("@")[0].replace(/\./g, " "));
-}
-
-function getDayAndHourFromRound(round: number) {
-    const day = Math.floor(round / 2);
-    const hour = round % 2;
-    return { day, hour };
 }
 </script>
 
