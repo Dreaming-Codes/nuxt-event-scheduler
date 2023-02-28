@@ -97,7 +97,7 @@ function getDayAndHourFromRound(round: number) {
             </div>
             <div class="flex items-center ml-auto">
                 <input
-                    :checked="user.user.checked"
+                    :checked="Boolean(user.joinedAt)"
                     class="toggle toggle-success color-red"
                     type="checkbox"
                     @change="(e) => sendPresence(e, user)"
