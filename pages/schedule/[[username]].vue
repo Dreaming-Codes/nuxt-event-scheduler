@@ -6,6 +6,7 @@ import { capitalizeEachWord, fromEmailToName } from "~/utils";
 const { data } = useSession();
 const route = useRoute();
 const globalStore = useGlobalStore();
+const config = useAppConfig();
 
 async function getUserInfoByEmail(email: string) {
     const rawData = await useFetch("/api/events/admin/getUserEventsFromEmail", {
@@ -45,20 +46,22 @@ const events = userInfo.EventUser;
             <div class="w-full text-left">Lezione</div>
             <div class="flex items-center ml-auto">Presente?</div>
         </div>
-        <div
-            v-for="(event, i) in events"
-            :key="i"
-            class="flex items-center p-2 mb-1"
-        >
-            <div class="w-full text-left">{{ event.event.name }}</div>
-            <div class="flex items-center ml-auto">
-                <input
-                    :checked="Boolean(event.joinedAt)"
-                    class="toggle toggle-success color-red"
-                    disabled
-                    type="checkbox"
-                />
+        <template v-for="(event, i) in events" :key="i">
+            <div>
+                {{ config.DAYS[Math.floor(i / config.HOURS.length)] }}
+                {{ config.HOURS[i % config.HOURS.length] }}
             </div>
-        </div>
+            <div class="flex items-center p-2 mb-1">
+                <div class="w-full text-left">{{ event.event.name }}</div>
+                <div class="flex items-center ml-auto">
+                    <input
+                        :checked="Boolean(event.joinedAt)"
+                        class="toggle toggle-success color-red"
+                        disabled
+                        type="checkbox"
+                    />
+                </div>
+            </div>
+        </template>
     </div>
 </template>
