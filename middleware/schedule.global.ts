@@ -1,6 +1,8 @@
 export default defineNuxtRouteMiddleware((to) => {
-    const { status } = useSession();
+    const { status, data } = useSession();
 
+    // @ts-ignore
+    if (data?.value?.user.admin) return;
     if (
         status.value == "authenticated" &&
         !to.fullPath.startsWith("/schedule")
