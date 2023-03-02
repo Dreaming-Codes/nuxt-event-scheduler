@@ -105,6 +105,12 @@ export const useGlobalStore = defineStore("global", {
             }
 
             return this.getMaxUsersByEvent(event, round);
+        },
+
+        getSubscribedEvents() {
+            return this.subscribedEvents.map((eventId, round) => {
+                return this.events.find((event) => event.id === eventId);
+            });
         }
     }
 });

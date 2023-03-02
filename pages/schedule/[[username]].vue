@@ -14,6 +14,7 @@ async function getUserInfoByEmail(email: string) {
             email
         }
     });
+
     return rawData.data.value;
 }
 
@@ -32,7 +33,8 @@ const name = // @ts-ignore
         ? fromEmailToName(email) // @ts-ignore
         : capitalizeEachWord(userInfo.name);
 // @ts-ignore
-const events = userInfo.EventUser;
+const events = globalStore.getSubscribedEvents();
+console.log(events);
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const events = userInfo.EventUser;
                 {{ config.HOURS[i % config.HOURS.length] }}
             </div>
             <div class="flex items-center p-2 mb-1">
-                <div class="w-full text-left">{{ event.event.name }}</div>
+                <div class="w-full text-left">{{ event.name }}</div>
                 <div class="flex items-center ml-auto">
                     <input
                         :checked="Boolean(event.joinedAt)"
