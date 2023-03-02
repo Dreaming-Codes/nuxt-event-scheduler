@@ -8,6 +8,15 @@ export default defineEventHandler(async (event) => {
     return await prisma.user.findUnique({
         // @ts-ignore
         where: { email: query.email },
-        include: { EventUser: { include: { event: true } } }
+        include: {
+            EventUser: {
+                orderBy: {
+                    round: "asc"
+                },
+                include: {
+                    event: true
+                }
+            }
+        }
     });
 });

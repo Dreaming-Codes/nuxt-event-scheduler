@@ -14,7 +14,6 @@ async function getUserInfoByEmail(email: string) {
             email
         }
     });
-
     return rawData.data.value;
 }
 
@@ -33,7 +32,7 @@ const name = // @ts-ignore
         ? fromEmailToName(email) // @ts-ignore
         : capitalizeEachWord(userInfo.name);
 // @ts-ignore
-const events = globalStore.getSubscribedEvents();
+const events = userInfo.EventUser;
 console.log(events);
 </script>
 
@@ -46,6 +45,7 @@ console.log(events);
         ({{ userInfo.section }}-{{ userInfo.class }}).
         <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
             <div class="w-full text-left">Lezione</div>
+            <div class="flex items-center ml-auto">Presente?</div>
         </div>
         <template v-for="(event, i) in events" :key="i">
             <div>
@@ -53,7 +53,15 @@ console.log(events);
                 {{ config.HOURS[i % config.HOURS.length] }}
             </div>
             <div class="flex items-center p-2 mb-1">
-                <div class="w-full text-left">{{ event.name }}</div>
+                <div class="w-full text-left">{{ event.event.name }}</div>
+                <div class="flex items-center ml-auto">
+                    <input
+                        :checked="Boolean(event.joinedAt)"
+                        class="toggle toggle-success color-red"
+                        disabled
+                        type="checkbox"
+                    />
+                </div>
             </div>
         </template>
     </div>
