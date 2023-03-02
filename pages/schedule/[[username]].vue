@@ -53,6 +53,9 @@ console.log(events);
                 {{ config.DAYS[Math.floor(i / config.HOURS.length)] }}
                 {{ config.HOURS[i % config.HOURS.length] }}
             </div>
+            <div class="flex items-center p-2 mb-1">
+                <div class="w-full text-left">{{ event.name }}</div>
+            </div>
         </template>
     </div>
 </template>
