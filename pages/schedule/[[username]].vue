@@ -53,17 +53,6 @@ console.log(events);
                 {{ config.DAYS[Math.floor(i / config.HOURS.length)] }}
                 {{ config.HOURS[i % config.HOURS.length] }}
             </div>
-            <div class="flex items-center p-2 mb-1">
-                <div class="w-full text-left">{{ event.name }}</div>
-                <div class="flex items-center ml-auto">
-                    <input
-                        :checked="Boolean(event.joinedAt)"
-                        class="toggle toggle-success color-red"
-                        disabled
-                        type="checkbox"
-                    />
-                </div>
-            </div>
         </template>
     </div>
 </template>
