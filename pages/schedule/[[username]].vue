@@ -46,7 +46,6 @@ console.log(events);
         ({{ userInfo.section }}-{{ userInfo.class }}).
         <div class="flex items-start p-2 mb-1 font-black pb-0 text-xl">
             <div class="w-full text-left">Lezione</div>
-            <div class="flex items-center ml-auto">Presente?</div>
         </div>
         <template v-for="(event, i) in events" :key="i">
             <div>
