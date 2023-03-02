@@ -33,7 +33,6 @@ const name = // @ts-ignore
         : capitalizeEachWord(userInfo.name);
 // @ts-ignore
 const events = userInfo.EventUser;
-console.log(events);
 </script>
 
 <template>
