@@ -94,10 +94,6 @@ export const useGlobalStore = defineStore("global", {
                 (maxUser: any) => maxUser.round === round
             );
 
-            if (!roundMaxUsers) {
-                return 0;
-            }
-
             //@ts-ignore
             return roundMaxUsers.maxUsers;
         },
