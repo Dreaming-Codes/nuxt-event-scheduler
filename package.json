@@ -10,7 +10,8 @@
         "postinstall": "nuxt prepare & prisma generate",
         "seed-events": "npx ts-node ./prisma/seed-events.ts",
         "seed-users": "npx ts-node ./prisma/seed-users.ts",
-        "prisma": "prisma"
+        "prisma": "prisma",
+        "start": "node .output/server/index.mjs"
     },
     "devDependencies": {
         "@morev/vue-transitions": "^2.3.6",
@@ -36,6 +37,6 @@
         "typescript": "^4.9.5"
     },
     "volta": {
-        "node": "16.19.0"
+        "node": "19.9.0"
     }
 }

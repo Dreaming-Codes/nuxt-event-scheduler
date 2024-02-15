@@ -1,6 +1,8 @@
 import fs from "fs/promises";
 import { PrismaClient } from "@prisma/client";
 
+// NOTICE: Doesn't work, use IntelliJ IDEA import feature instead
+
 const prisma = new PrismaClient();
 
 const args = process.argv.slice(2);
