@@ -90,10 +90,16 @@ export const useGlobalStore = defineStore("global", {
                 return 0;
             }
 
+            let roundMaxUsers = event.RoundMaxUsers.find(
+                (maxUser: any) => maxUser.round === round
+            );
+
+            if (!roundMaxUsers) {
+                return 0;
+            }
+
             //@ts-ignore
-            return event.RoundMaxUsers.find(
-                (maxUser) => maxUser.round === round
-            ).maxUsers;
+            return roundMaxUsers.maxUsers;
         },
 
         getMaxUsersByEventId(round: number, eventId: number) {
