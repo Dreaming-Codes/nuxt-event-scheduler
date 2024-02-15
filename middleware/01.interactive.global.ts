@@ -1,13 +1,15 @@
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
     const { status, data } = useSession();
 
     if (status.value !== "authenticated") {
         return;
     }
+
     // @ts-ignore
     if (data?.value?.user.interactiveDone) {
         return;
     }
+
     if (to.name === "interactive") {
         return;
     }

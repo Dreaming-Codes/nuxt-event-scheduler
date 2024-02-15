@@ -1,6 +1,10 @@
 export default defineNuxtRouteMiddleware((to) => {
     const { status, data } = useSession();
 
+    if (to.name === "interactive") {
+        return;
+    }
+
     // @ts-ignore
     if (data?.value?.user.admin) return;
     if (
