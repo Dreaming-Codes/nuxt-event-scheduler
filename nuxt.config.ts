@@ -3,10 +3,12 @@
 const config = {
     TITLE: "FORUM MEUCCI",
     LANG: "it",
-    DESCRIPTION: "Pagina di registrazione per il forum dell'ITIS Meucci 2023",
-    COUNTDOWN_DAY: "2023-02-20T00:00:00+0100",
-    EVENT_DAY: "2023-02-28T08:30:00+0100",
-    DAYS: ["Martedì", "Mercoledì", "Giovedì"],
+    DESCRIPTION: "Pagina di registrazione per il forum dell'ITIS Meucci 2024",
+    // Day the registration will be opened
+    COUNTDOWN_DAY: "2024-02-19T00:00:00+0100",
+    // Day the registration will be closed
+    EVENT_DAY: "2024-02-24T00:00:00+0100",
+    DAYS: ["Giovedì", "Venerdì"],
     HOURS: ["8:30", "11:00"],
     HOURS_LENGTH: 2.5
 };
