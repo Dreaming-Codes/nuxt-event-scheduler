@@ -66,7 +66,7 @@ const events = userInfo.EventUser;
         </template>
         <button
             class="white-transparent-component transition-colors"
-            @click="() => router.push(`/interactive`)">
+            @click="() => navigateTo(`/interactive`)">
             Modifica corsi
         </button>
     </div>

@@ -65,7 +65,7 @@ async function nextRound() {
         showEndPhaseDialog.value = true;
         await sleep(2420);
         await getSession({ required: true });
-        await router.push("/");
+        await navigateTo("/");
         return;
     }
     await globalStore.fetchCounts(selectedRound.value - 1);
