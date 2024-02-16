@@ -17,7 +17,7 @@ const isOpen = ref(false);
         >
             <div class="flex place-content-between">
                 <p class="text-white">
-                    {{ name.length > 30 ? name.slice(0, 29) + "…" : name }}
+                  {{ name }}
                 </p>
                 <button @click="isOpen = true">
                     <Icon class="mb-1" name="mdi:information-outline" />
