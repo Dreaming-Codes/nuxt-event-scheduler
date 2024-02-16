@@ -11,7 +11,7 @@
         "seed-events": "npx ts-node ./prisma/seed-events.ts",
         "seed-users": "npx ts-node ./prisma/seed-users.ts",
         "prisma": "prisma",
-        "start": "node .output/server/index.mjs"
+        "start": "node --optimize_for_size --max_old_space_size=500 --gc_interval=100 .output/server/index.mjs"
     },
     "devDependencies": {
         "@morev/vue-transitions": "^2.3.6",
