@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { checkParams, getSession } from "~/server/utils";
+import {PrismaClient} from "@prisma/client";
+import {checkParams, getSession} from "~/server/utils";
 
 const prisma = new PrismaClient();
 
@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
         });
     }
 
+    // @ts-ignore
     return {
         round,
         users: await prisma.eventUser.findMany({
@@ -40,9 +41,14 @@ export default defineEventHandler(async (event) => {
                         section: true,
                         class: true,
                         email: true
-                    }
+                    },
                 },
                 joinedAt: true
+            },
+            orderBy: {
+                user: {
+                    name: "asc"
+                }
             }
         })
     };
