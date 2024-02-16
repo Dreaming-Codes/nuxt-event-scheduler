@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { useGlobalStore } from "~/stores/global";
+import {useGlobalStore} from "~/stores/global";
 
-import { capitalizeEachWord, fromEmailToName } from "~/utils";
+import {capitalizeEachWord, fromEmailToName} from "~/utils";
 
 const { data } = useSession();
 const route = useRoute();
+const router = useRouter();
 const globalStore = useGlobalStore();
 const config = useAppConfig();
 
@@ -63,5 +64,10 @@ const events = userInfo.EventUser;
                 </div>
             </div>
         </template>
+        <button
+            class="white-transparent-component transition-colors"
+            @click="() => router.push(`/interactive`)">
+            Modifica corsi
+        </button>
     </div>
 </template>
