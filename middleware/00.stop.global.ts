@@ -20,5 +20,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
         return;
     }
 
+    if (to.name !== "interactive") {
+        return;
+    }
+
     return navigateTo("/schedule");
 });
