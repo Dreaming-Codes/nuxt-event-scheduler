@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {useGlobalStore} from "~/stores/global";
+import { useGlobalStore } from "~/stores/global";
 
-import {capitalizeEachWord, fromEmailToName} from "~/utils";
+import { capitalizeEachWord, fromEmailToName } from "~/utils";
 
 const { data } = useSession();
 const route = useRoute();
@@ -34,6 +34,12 @@ const name = // @ts-ignore
         : capitalizeEachWord(userInfo.name);
 // @ts-ignore
 const events = userInfo.EventUser;
+
+const showModifyCourses = ref(true);
+
+if (new Date() > new Date(config.EVENT_DAY)) {
+    showModifyCourses.value = false;
+}
 </script>
 
 <template>
@@ -66,7 +72,9 @@ const events = userInfo.EventUser;
         </template>
         <button
             class="white-transparent-component transition-colors"
-            @click="() => navigateTo(`/interactive`)">
+            @click="() => navigateTo(`/interactive`)"
+            v-if="showModifyCourses"
+        >
             Modifica corsi
         </button>
     </div>

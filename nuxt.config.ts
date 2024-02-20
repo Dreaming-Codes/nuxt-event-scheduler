@@ -7,7 +7,7 @@ const config = {
     // Day the registration will be opened
     COUNTDOWN_DAY: "2024-02-19T00:00:00+0100",
     // Day the registration will be closed
-    EVENT_DAY: "2024-02-24T00:00:00+0100",
+    EVENT_DAY: "2024-02-21T00:00:00+0100",
     DAYS: ["Giovedì", "Venerdì"],
     HOURS: ["8:30", "11:00"],
     HOURS_LENGTH: 2.5
