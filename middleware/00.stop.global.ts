@@ -3,16 +3,16 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     const config = useAppConfig();
 
+    if (new Date() < new Date(config.EVENT_DAY)) {
+        return;
+    }
+
     if (status.value !== "authenticated") {
         return;
     }
 
     // @ts-ignore
     if (data?.value?.user.admin) {
-        return;
-    }
-
-    if (new Date() < new Date(config.EVENT_DAY)) {
         return;
     }
 
