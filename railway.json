@@ -9,6 +9,6 @@
         "startCommand": "pnpm run start",
         "sleepApplication": false,
         "restartPolicyType": "ON_FAILURE",
-        "restartPolicyMaxRetries": 100
+        "restartPolicyMaxRetries": 10
     }
 }
