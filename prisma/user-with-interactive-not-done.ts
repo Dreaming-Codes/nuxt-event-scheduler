@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -6,24 +6,25 @@ async function findUsersWithInteractiveNotDone() {
     // @ts-ignore
     return prisma.user.findMany({
         where: {
-            interactiveDone: false,
+            interactiveDone: false
         },
         select: {
             name: true,
-            email: true,
-        },
+            email: true
+        }
     });
 }
 
 findUsersWithInteractiveNotDone()
-    .then(users => {
+    .then((users) => {
         let str = "";
-        users.forEach(user => {
+        users.forEach((user) => {
+            // only show emails that contain at least one uppercase letter
             str += ` ${user.email}`;
         });
         str = str.trim();
-        console.log(str)
+        console.log(str);
     })
     .finally(async () => {
-        await prisma.$disconnect()
+        await prisma.$disconnect();
     });
