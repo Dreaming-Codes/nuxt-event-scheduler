@@ -7,26 +7,26 @@ export default defineEventHandler(() => {
 
     // use MB if less than 1gb
     if (os.totalmem() < 1024 * 1024 * 1024) {
-        totalMemHuman = os.totalmem() / 1024 / 1024 + " MB";
+        totalMemHuman = os.totalmem() / 1024 / 1024 + " MiB";
     } else {
-        totalMemHuman = os.totalmem() / 1024 / 1024 / 1024 + " GB";
+        totalMemHuman = os.totalmem() / 1024 / 1024 / 1024 + " GiB";
     }
     if (os.freemem() < 1024 * 1024 * 1024) {
-        freeMemHuman = os.freemem() / 1024 / 1024 + " MB";
+        freeMemHuman = os.freemem() / 1024 / 1024 + " MiB";
     } else {
-        freeMemHuman = os.freemem() / 1024 / 1024 / 1024 + " GB";
+        freeMemHuman = os.freemem() / 1024 / 1024 / 1024 + " GiB";
     }
     if (memory.heapUsed < 1024 * 1024 * 1024) {
-        heapUsedHuman = process.memoryUsage().heapUsed / 1024 / 1024 + " MB";
+        heapUsedHuman = process.memoryUsage().heapUsed / 1024 / 1024 + " MiB";
     } else {
         heapUsedHuman =
-            process.memoryUsage().heapUsed / 1024 / 1024 / 1024 + " GB";
+            process.memoryUsage().heapUsed / 1024 / 1024 / 1024 + " GiB";
     }
     if (memory.heapTotal < 1024 * 1024 * 1024) {
-        heapTotalHuman = process.memoryUsage().heapTotal / 1024 / 1024 + " MB";
+        heapTotalHuman = process.memoryUsage().heapTotal / 1024 / 1024 + " MiB";
     } else {
         heapTotalHuman =
-            process.memoryUsage().heapTotal / 1024 / 1024 / 1024 + " GB";
+            process.memoryUsage().heapTotal / 1024 / 1024 / 1024 + " GiB";
     }
 
     return {
