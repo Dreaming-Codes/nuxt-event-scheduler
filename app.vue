@@ -22,6 +22,9 @@ useHead({
             content: config.DESCRIPTION
         },
         {
+            name: "darkreader-lock"
+        },
+        {
             name: "google-site-verification",
             content: "Noj9u0V2hrMOox_Ft5pMKfOK51vlpCab714vr_xic-Q"
         },
