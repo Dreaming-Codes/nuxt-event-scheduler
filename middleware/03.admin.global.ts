@@ -14,7 +14,10 @@ export default defineNuxtRouteMiddleware((to) => {
     }
 
     // @ts-ignore
-    if (data?.value?.user.admin && to.name === "schedule") {
+    if (
+        data?.value?.user.admin &&
+        (to.name === "schedule-username" || to.name === "schedule")
+    ) {
         return navigateTo("/");
     }
 });
