@@ -5,6 +5,7 @@ import { capitalizeEachWord, fromEmailToName } from "~/utils";
 
 const { data } = useSession();
 const route = useRoute();
+const router = useRouter();
 const globalStore = useGlobalStore();
 const config = useAppConfig();
 
@@ -33,6 +34,12 @@ const name = // @ts-ignore
         : capitalizeEachWord(userInfo.name);
 // @ts-ignore
 const events = userInfo.EventUser;
+
+const showModifyCourses = ref(true);
+
+if (new Date() > new Date(config.EVENT_DAY)) {
+    showModifyCourses.value = false;
+}
 </script>
 
 <template>
@@ -63,5 +70,12 @@ const events = userInfo.EventUser;
                 </div>
             </div>
         </template>
+        <button
+            class="white-transparent-component transition-colors"
+            @click="() => navigateTo(`/interactive`)"
+            v-if="showModifyCourses"
+        >
+            Modifica corsi
+        </button>
     </div>
 </template>

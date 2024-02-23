@@ -3,7 +3,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
     const config = useAppConfig();
 
-    if (new Date() >= new Date(config.EVENT_DAY)) {
+    if (new Date() < new Date(config.EVENT_DAY)) {
         return;
     }
 
@@ -12,13 +12,17 @@ export default defineNuxtRouteMiddleware(async (to) => {
     }
 
     // @ts-ignore
-    if (data?.value?.user.interactiveDone) {
+    if (data?.value?.user.admin) {
         return;
     }
 
-    if (to.name === "interactive") {
+    if (to.name === "schedule") {
         return;
     }
 
-    return navigateTo("/interactive");
+    if (to.name !== "interactive") {
+        return;
+    }
+
+    return navigateTo("/schedule");
 });

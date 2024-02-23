@@ -36,6 +36,17 @@ useHead({
         {
             name: "apple-mobile-web-app-status-bar-style",
             content: themeColor
+        },
+        {
+            name: "darkreader-lock",
+            content: themeColor
+        }
+    ],
+    link: [
+        {
+            rel: "icon",
+            type: "image/svg+xml",
+            href: "/favicon.svg"
         }
     ],
     htmlAttrs: {
