@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware((to) => {
         return;
     }
 
-    if (to.name === "schedule" && to.params && to.params.username) {
+    if (to.name === "schedule-username" && to.params && to.params.username) {
         return;
     }
 
