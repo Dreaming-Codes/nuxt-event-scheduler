@@ -9,12 +9,12 @@ export default defineNuxtRouteMiddleware((to) => {
         return;
     }
 
-    if (to.params.username) {
+    if (to.name === "schedule" && to.params && to.params.username) {
         return;
     }
 
     // @ts-ignore
-    if (data?.value?.user.admin) {
+    if (data?.value?.user.admin && to.name === "schedule") {
         return navigateTo("/");
     }
 });
